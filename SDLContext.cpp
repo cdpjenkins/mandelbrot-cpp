@@ -1,12 +1,11 @@
 #include <exception>
 #include <iostream>
-#include <math.h>
 
 #include <SDL.h>
 #include <SDL_image.h>
 
 #include "SDLContext.hpp"
-#include "Complex.hpp"
+#include "Mandelbrot.hpp"
 
 using namespace std;
 
@@ -29,7 +28,7 @@ SDLContext::SDLContext() {
 
     IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
-    SDL_Window *window = SDL_CreateWindow("MAndelbrot!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+    SDL_Window *window = SDL_CreateWindow("Mandelbrot!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                         WIDTH, HEIGHT,
                                         SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS);
     if (window == NULL) {
@@ -50,6 +49,7 @@ SDLContext::~SDLContext() {
 }
 
 void SDLContext::main_loop() {
+    Mandelbrot mandelbrot = Mandelbrot();
     bool quit = false;
     while (!quit) {
         SDL_Event e;
@@ -71,20 +71,11 @@ void SDLContext::main_loop() {
                 float im = (float)(y - HEIGHT/2) * 4 / HEIGHT;
                 float re = (float)(x - WIDTH/2) * 4 / WIDTH;
 
-                float brightness = sqrtf(re*re + im*im) * 0xFF;
-                if (brightness > 0xFF) {
-                    brightness = 0xFF;
-                }
-
-                Complex z = Complex::ZERO();
                 Complex k = Complex(re, im);
-                int n;
-                for (n = 0; n < 100 && z.modulus() < 4; n++) {
-                    z = z.squared() + k;
-                }
 
-                brightness = (float)n / 100 * 0xFF;
+                int n = mandelbrot.compute(k);
 
+                float brightness = n != -1 ? (float)n / 100 * 0xFF : 0x00;
 
                 SDL_SetRenderDrawColor(renderer, brightness, brightness, brightness, 0xFF);
 
