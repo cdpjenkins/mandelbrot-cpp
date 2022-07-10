@@ -1,8 +1,9 @@
 #ifndef _COMPLEX_HPP
 #define _COMPLEX_HPP
 
-class Complex;
+#include "math.h"
 
+// TODO - turns out there is a complex class in the std library that we could just use...
 class Complex {
 public:
     float re, im;
