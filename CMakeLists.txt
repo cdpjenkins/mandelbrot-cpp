@@ -13,6 +13,7 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 add_executable(mandelbrot
         main.cpp
         Mandelbrot.cpp
+        MandelbrotRenderer.cpp
         SDLContext.cpp
     )
 

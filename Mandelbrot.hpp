@@ -5,9 +5,14 @@
 
 class Mandelbrot {
 public:
-    Mandelbrot() {}
+    Mandelbrot(int iteration_depth) {
+        this->iteration_depth = iteration_depth;
+    }
 
     int compute(Complex& k);
+
+private:
+    int iteration_depth;
 };
 
 #endif // _MANDELBROT_HPP

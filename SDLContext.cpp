@@ -5,7 +5,7 @@
 #include <SDL_image.h>
 
 #include "SDLContext.hpp"
-#include "Mandelbrot.hpp"
+#include "MandelbrotRenderer.hpp"
 
 using namespace std;
 
@@ -49,7 +49,9 @@ SDLContext::~SDLContext() {
 }
 
 void SDLContext::main_loop() {
-    Mandelbrot mandelbrot = Mandelbrot();
+    MandelbrotRenderer mandie = MandelbrotRenderer(WIDTH, HEIGHT);
+    mandie.render_to_buffer();
+
     bool quit = false;
     while (!quit) {
         SDL_Event e;
@@ -66,23 +68,19 @@ void SDLContext::main_loop() {
             }
         }
 
+        Uint32 start_time = SDL_GetTicks();
+
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
-                float im = (float)(y - HEIGHT/2) * 4 / HEIGHT;
-                float re = (float)(x - WIDTH/2) * 4 / WIDTH;
+                Colour colour = mandie.colour_at(x, y);
 
-                Complex k = Complex(re, im);
-
-                int n = mandelbrot.compute(k);
-
-                float brightness = n != -1 ? (float)n / 100 * 0xFF : 0x00;
-
-                SDL_SetRenderDrawColor(renderer, brightness, brightness, brightness, 0xFF);
-
+                SDL_SetRenderDrawColor(renderer, colour.r, colour.g, colour.b, colour.a);
                 SDL_RenderDrawPoint(renderer, x, y);
             }
         }
 
         SDL_RenderPresent(renderer);
+
+        cout << SDL_GetTicks() - start_time << "ms" <<endl;
     }
 }

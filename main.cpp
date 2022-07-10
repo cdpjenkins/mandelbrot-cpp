@@ -8,9 +8,8 @@
 using namespace std;
 
 int main() {
-    cout << "Mandelbrot!" << endl;
-
     SDLContext sdl = SDLContext();
 
+    // TODO main_loop really shouldn't be in SDLContext
     sdl.main_loop();
 }
