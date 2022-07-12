@@ -10,8 +10,6 @@ public:
     }
 
     int compute(Complex& k);
-
-private:
     int iteration_depth;
 };
 

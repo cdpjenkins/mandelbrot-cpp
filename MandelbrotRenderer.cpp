@@ -15,7 +15,7 @@ void MandelbrotRenderer::render_to_buffer() {
 
             // TODO iteration depth is basically hardcoded here (100)
             float brightness = n != -1
-                    ? (float)n / 100 * 0xFF
+                    ? (float)n / mandelbrot.iteration_depth * 0xFF
                     : 0xFF;
 
             buffer[y * screen_width + x] = Colour(brightness, brightness, brightness, 0xFF);
