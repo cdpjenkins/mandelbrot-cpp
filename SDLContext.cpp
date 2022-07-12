@@ -50,7 +50,13 @@ SDLContext::~SDLContext() {
 
 void SDLContext::main_loop() {
     MandelbrotRenderer mandie = MandelbrotRenderer(WIDTH, HEIGHT);
+
+    Uint32 start_time;
+    
+    start_time = SDL_GetTicks();
     mandie.render_to_buffer();
+    cout << "to render to buffer: " << SDL_GetTicks() - start_time << "ms" <<endl;
+
 
     bool quit = false;
     while (!quit) {
@@ -68,7 +74,7 @@ void SDLContext::main_loop() {
             }
         }
 
-        Uint32 start_time = SDL_GetTicks();
+        start_time = SDL_GetTicks();
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
