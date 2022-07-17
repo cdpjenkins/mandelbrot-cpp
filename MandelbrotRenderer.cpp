@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 
+#include <SDL.h>
+
 #include "MandelbrotRenderer.hpp"
 
 const int colour_cycle_period = 120;
@@ -45,12 +47,13 @@ Colour iterations_to_rgb(int iterations) {
 }
 
 void MandelbrotRenderer::render_to_buffer() {
+
+    Uint32 start_time = SDL_GetTicks();
+
     for (int y = 0; y < screen_height; y++) {
         for (int x = 0; x < screen_width; x++) {
-            float im = (float)(y - screen_height/2) * 4 / screen_height;
-            float re = (float)(x - screen_width/2) * 4 / screen_width;
-
-            Complex k = Complex(re, im);
+            // TODO this is probably very inefficient with all the divides and multiplies
+            Complex k = screen_to_complex(x, y);
 
             int n = mandelbrot.compute(k);
 
@@ -60,7 +63,33 @@ void MandelbrotRenderer::render_to_buffer() {
                     : 0xFF;
 
             buffer[y * screen_width + x] = iterations_to_rgb(n);
-            // buffer[y * screen_width + x] = Colour(brightness, brightness, brightness, 0xFF);
         }
     }
+
+    cout << SDL_GetTicks() - start_time << "ms" <<endl;
+}
+
+Complex MandelbrotRenderer::screen_to_complex(int x, int y) {
+    float x_progress = (float)x / screen_width;
+    float y_progress = (float)y / screen_height;
+
+    Complex top_left = Complex(centre.re - zoom_size, centre.im - zoom_size);
+    Complex bottom_right = Complex(centre.re + zoom_size, centre.im + zoom_size);
+
+    float complex_width = zoom_size * 2;
+    float complex_height = zoom_size * 2;
+
+    float re = top_left.re + complex_width * x_progress;
+    float im = top_left.im + complex_height * y_progress;
+
+    // float im = (float)(y - screen_height/2) * 4 / screen_height;
+    // float re = (float)(x - screen_width/2) * 4 / screen_width;
+
+    return Complex(re, im);
+}
+
+void MandelbrotRenderer::zoom_in_to(int x, int y) {
+    centre = screen_to_complex(x, y);
+    zoom_size *= 0.7;
+    render_to_buffer();
 }
