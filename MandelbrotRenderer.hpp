@@ -7,7 +7,7 @@
 class MandelbrotRenderer {
 public:
     MandelbrotRenderer(int screen_width, int screen_height)
-        : mandelbrot(200)
+        : mandelbrot(400)
     {
         this->screen_width = screen_width;
         this->screen_height = screen_height;
@@ -31,7 +31,7 @@ private:
     int screen_width;
     int screen_height;
     Complex centre = Complex(0, 0);
-    float zoom_size = 4;
+    double zoom_size = 4;
     Colour *buffer;    // TODO this should be some STL type that I don't know about yet
     Mandelbrot mandelbrot;
 
