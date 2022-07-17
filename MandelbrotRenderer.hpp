@@ -7,7 +7,7 @@
 class MandelbrotRenderer {
 public:
     MandelbrotRenderer(int screen_width, int screen_height)
-        : mandelbrot(100)
+        : mandelbrot(200)
     {
         this->screen_width = screen_width;
         this->screen_height = screen_height;
