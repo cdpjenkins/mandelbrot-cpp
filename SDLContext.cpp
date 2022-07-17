@@ -71,10 +71,12 @@ void SDLContext::main_loop() {
                         quit = true;
                     }
                     break;
+                case SDL_MOUSEBUTTONUP:
+                    mandie.zoom_in_to(e.button.x, e.button.y);
+
+                    break;
             }
         }
-
-        start_time = SDL_GetTicks();
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
@@ -86,7 +88,5 @@ void SDLContext::main_loop() {
         }
 
         SDL_RenderPresent(renderer);
-
-        cout << SDL_GetTicks() - start_time << "ms" <<endl;
     }
 }

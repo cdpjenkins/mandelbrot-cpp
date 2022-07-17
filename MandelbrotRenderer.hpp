@@ -25,15 +25,17 @@ public:
     }
 
     void render_to_buffer();
+    void zoom_in_to(int x, int y);
 
 private:
     int screen_width;
     int screen_height;
-
-    // TODO this should be some STL type that I don't know about yet
-    Colour *buffer;
-
+    Complex centre = Complex(0, 0);
+    float zoom_size = 4;
+    Colour *buffer;    // TODO this should be some STL type that I don't know about yet
     Mandelbrot mandelbrot;
+
+    Complex screen_to_complex(int x, int y);
 };
 
 #endif // _MANDELBROTRENDERER_HPP
