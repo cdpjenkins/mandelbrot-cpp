@@ -20,12 +20,20 @@ public:
         return Complex(new_re, new_im);
     }
 
+    inline void square_and_add(Complex k) {
+        float new_re = re*re - im*im + k.re;
+        float new_im = re * im * 2 + k.im;
+
+        re = new_re;
+        im = new_im;
+    }
+
     inline Complex operator+(Complex& that) {
         return Complex(this->re + that.re, this->im + that.im);
     }
 
-    inline float modulus() {
-        return sqrtf(re*re + im*im);
+    inline float norm() {
+        return re*re + im*im;
     }
 
     static inline Complex ZERO() {

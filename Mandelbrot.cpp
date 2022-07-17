@@ -6,8 +6,8 @@ int Mandelbrot::compute(Complex& k) {
     Complex z = Complex::ZERO();
 
     for (int n = 0; n < iteration_depth; n++) {
-        z = z.squared() + k;
-        if (z.modulus() >= 4) {
+        z.square_and_add(k);
+        if (z.norm() >= 16) {
             return n;
         }
     }
