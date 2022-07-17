@@ -58,8 +58,8 @@ void MandelbrotRenderer::render_to_buffer() {
             int n = mandelbrot.compute(k);
 
             // TODO iteration depth is basically hardcoded here (100)
-            float brightness = n != -1
-                    ? (float)n / mandelbrot.iteration_depth * 0xFF
+            double brightness = n != -1
+                    ? (double)n / mandelbrot.iteration_depth * 0xFF
                     : 0xFF;
 
             buffer[y * screen_width + x] = iterations_to_rgb(n);
@@ -70,20 +70,17 @@ void MandelbrotRenderer::render_to_buffer() {
 }
 
 Complex MandelbrotRenderer::screen_to_complex(int x, int y) {
-    float x_progress = (float)x / screen_width;
-    float y_progress = (float)y / screen_height;
+    double x_progress = (double)x / screen_width;
+    double y_progress = (double)y / screen_height;
 
     Complex top_left = Complex(centre.re - zoom_size, centre.im - zoom_size);
     Complex bottom_right = Complex(centre.re + zoom_size, centre.im + zoom_size);
 
-    float complex_width = zoom_size * 2;
-    float complex_height = zoom_size * 2;
+    double complex_width = zoom_size * 2;
+    double complex_height = zoom_size * 2;
 
-    float re = top_left.re + complex_width * x_progress;
-    float im = top_left.im + complex_height * y_progress;
-
-    // float im = (float)(y - screen_height/2) * 4 / screen_height;
-    // float re = (float)(x - screen_width/2) * 4 / screen_width;
+    double re = top_left.re + complex_width * x_progress;
+    double im = top_left.im + complex_height * y_progress;
 
     return Complex(re, im);
 }

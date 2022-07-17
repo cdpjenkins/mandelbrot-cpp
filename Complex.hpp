@@ -6,23 +6,23 @@
 // TODO - turns out there is a complex class in the std library that we could just use...
 class Complex {
 public:
-    float re, im;
+    double re, im;
 
-    Complex(float re, float im) {
+    Complex(double re, double im) {
         this->re = re;
         this->im = im;
     }
 
     inline Complex squared() {
-        float new_re = re*re - im*im;
-        float new_im = re * im * 2;
+        double new_re = re*re - im*im;
+        double new_im = re * im * 2;
 
         return Complex(new_re, new_im);
     }
 
     inline void square_and_add(Complex k) {
-        float new_re = re*re - im*im + k.re;
-        float new_im = re * im * 2 + k.im;
+        double new_re = re*re - im*im + k.re;
+        double new_im = re * im * 2 + k.im;
 
         re = new_re;
         im = new_im;
@@ -32,7 +32,7 @@ public:
         return Complex(this->re + that.re, this->im + that.im);
     }
 
-    inline float norm() {
+    inline double norm() {
         return re*re + im*im;
     }
 
