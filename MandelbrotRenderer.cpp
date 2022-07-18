@@ -90,3 +90,9 @@ void MandelbrotRenderer::zoom_in_to(int x, int y) {
     zoom_size *= 0.7;
     render_to_buffer();
 }
+
+void MandelbrotRenderer::zoom_out_to(int x, int y) {
+    centre = screen_to_complex(x, y);
+    zoom_size /= 0.7;
+    render_to_buffer();
+}

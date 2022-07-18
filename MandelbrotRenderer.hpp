@@ -26,6 +26,7 @@ public:
 
     void render_to_buffer();
     void zoom_in_to(int x, int y);
+    void zoom_out_to(int x, int y);
 
 private:
     int screen_width;

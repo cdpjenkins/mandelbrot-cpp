@@ -72,7 +72,13 @@ void SDLContext::main_loop() {
                     }
                     break;
                 case SDL_MOUSEBUTTONUP:
-                    mandie.zoom_in_to(e.button.x, e.button.y);
+                    cout << "button: " << (int)e.button.button << endl;
+
+                    if (e.button.button == SDL_BUTTON_LEFT) {
+                        mandie.zoom_in_to(e.button.x, e.button.y);
+                    } else {
+                        mandie.zoom_out_to(e.button.x, e.button.y);
+                    }
 
                     break;
             }
