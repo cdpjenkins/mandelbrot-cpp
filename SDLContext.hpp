@@ -5,6 +5,8 @@
 
 #include <SDL.h>
 
+#include "MandelbrotRenderer.hpp"
+
 using namespace std;
 
 class SDLContext {
@@ -22,6 +24,12 @@ public:
 private:
     SDL_Joystick* joystick = NULL;
     SDL_Window *window = NULL;
+
+    SDL_Texture *mandelbrot_texture;
+
+    MandelbrotRenderer mandie;
+
+    void render_mandie();
 };
 
 #endif // SDL_CONTEXT_HPP

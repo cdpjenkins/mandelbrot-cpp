@@ -28,12 +28,14 @@ public:
     void zoom_in_to(int x, int y);
     void zoom_out_to(int x, int y);
 
+    // TODO make this private again and move the memcpy into this class
+    Colour *buffer;
+
 private:
     int screen_width;
     int screen_height;
     Complex centre = Complex(0, 0);
     double zoom_size = 4;
-    Colour *buffer;    // TODO this should be some STL type that I don't know about yet
     Mandelbrot mandelbrot;
 
     Complex screen_to_complex(int x, int y);

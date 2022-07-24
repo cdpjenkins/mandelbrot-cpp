@@ -20,7 +20,8 @@ SDL_Texture *load_texture(SDL_Renderer *renderer, const char *texture_filename) 
     return texture;
 }
 
-SDLContext::SDLContext() {
+SDLContext::SDLContext() : mandie(WIDTH, HEIGHT) {
+
     int rc = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
     if (rc != 0) {
         throw exception();
@@ -37,6 +38,11 @@ SDLContext::SDLContext() {
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
+    mandelbrot_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
+    if (mandelbrot_texture == NULL) {
+        cout << "SDL_CreateTexture " << rc << " " << SDL_GetError() <<  endl;
+    }
+
     SDL_UpdateWindowSurface(window);
 }
 
@@ -48,15 +54,29 @@ SDLContext::~SDLContext() {
     SDL_Quit();
 }
 
+void SDLContext::render_mandie() {
+    int rc;
+    int texture_pitch;
+    void *texture_pixels;
+
+    mandie.render_to_buffer();
+
+    if (SDL_LockTexture(mandelbrot_texture, NULL, &texture_pixels, &texture_pitch) != 0) {
+        SDL_Log("Unable to lock texture: %s", SDL_GetError());
+    }
+    else {
+        memcpy(texture_pixels, mandie.buffer, texture_pitch * HEIGHT);
+    }
+
+    SDL_UnlockTexture(mandelbrot_texture);
+}
+
 void SDLContext::main_loop() {
-    MandelbrotRenderer mandie = MandelbrotRenderer(WIDTH, HEIGHT);
+    int rc;
 
     Uint32 start_time;
-    
-    start_time = SDL_GetTicks();
-    mandie.render_to_buffer();
-    cout << "to render to buffer: " << SDL_GetTicks() - start_time << "ms" <<endl;
 
+    render_mandie();
 
     bool quit = false;
     while (!quit) {
@@ -80,19 +100,16 @@ void SDLContext::main_loop() {
                         mandie.zoom_out_to(e.button.x, e.button.y);
                     }
 
+                    render_mandie();
+
                     break;
             }
         }
 
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
-                Colour colour = mandie.colour_at(x, y);
-
-                SDL_SetRenderDrawColor(renderer, colour.r, colour.g, colour.b, colour.a);
-                SDL_RenderDrawPoint(renderer, x, y);
-            }
+        rc = SDL_RenderCopy(renderer, mandelbrot_texture, NULL, NULL);
+        if (rc != 0) {
+            cout << "SDL_RenderCopy " << rc << " " << SDL_GetError() << " " << mandelbrot_texture << endl;
         }
-
         SDL_RenderPresent(renderer);
     }
 }
