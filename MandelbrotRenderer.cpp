@@ -69,7 +69,7 @@ void MandelbrotRenderer::render_to_buffer() {
     cout << SDL_GetTicks() - start_time << "ms" <<endl;
 }
 
-Complex MandelbrotRenderer::screen_to_complex(int x, int y) {
+Complex MandelbrotRenderer::screen_to_complex(const int x, const int y) {
     double x_progress = (double)x / screen_width;
     double y_progress = (double)y / screen_height;
 
@@ -85,13 +85,13 @@ Complex MandelbrotRenderer::screen_to_complex(int x, int y) {
     return Complex(re, im);
 }
 
-void MandelbrotRenderer::zoom_in_to(int x, int y) {
+void MandelbrotRenderer::zoom_in_to(const int x, const int y) {
     centre = screen_to_complex(x, y);
     zoom_size *= 0.7;
     render_to_buffer();
 }
 
-void MandelbrotRenderer::zoom_out_to(int x, int y) {
+void MandelbrotRenderer::zoom_out_to(const int x, const int y) {
     centre = screen_to_complex(x, y);
     zoom_size /= 0.7;
     render_to_buffer();

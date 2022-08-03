@@ -2,7 +2,7 @@
 
 #include "Mandelbrot.hpp"
 
-int Mandelbrot::compute(Complex& k) {
+int Mandelbrot::compute(const Complex& k) {
     Complex z = Complex::ZERO();
 
     for (int n = 0; n < iteration_depth; n++) {

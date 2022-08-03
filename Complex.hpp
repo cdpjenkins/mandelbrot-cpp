@@ -8,7 +8,7 @@ class Complex {
 public:
     double re, im;
 
-    Complex(double re, double im) {
+    Complex(const double re, const double im) {
         this->re = re;
         this->im = im;
     }
@@ -28,7 +28,7 @@ public:
         im = new_im;
     }
 
-    inline Complex operator+(Complex& that) {
+    inline Complex operator+(const Complex& that) {
         return Complex(this->re + that.re, this->im + that.im);
     }
 
