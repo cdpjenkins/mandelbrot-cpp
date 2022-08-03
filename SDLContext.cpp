@@ -87,8 +87,26 @@ void SDLContext::main_loop() {
                     quit = true;
                     break;
                 case SDL_KEYDOWN:
-                    if (e.key.keysym.scancode == SDL_SCANCODE_Q) {
-                        quit = true;
+                    switch (e.key.keysym.scancode) {
+                        case SDL_SCANCODE_Q:
+                            quit = true;
+                            break;
+                        case SDL_SCANCODE_P:
+                            cout << "increase depth" << endl;
+                            mandie.increase_depth();
+                            render_mandie();
+                            break;
+                        case SDL_SCANCODE_L:
+                            cout << "decrease depth" << endl;
+                            mandie.decrease_depth();
+                            render_mandie();
+                            break;
+                        case SDL_SCANCODE_KP_ENTER:
+                            render_mandie();
+                            break;
+                        default:
+                            // meh, don't care about other keys
+                            break;
                     }
                     break;
                 case SDL_MOUSEBUTTONUP:

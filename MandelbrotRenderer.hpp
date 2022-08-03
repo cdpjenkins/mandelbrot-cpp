@@ -1,6 +1,9 @@
 #ifndef _MANDELBROTRENDERER_HPP
 #define _MANDELBROTRENDERER_HPP
 
+#include <iostream>
+using namespace std;
+
 #include "Colour.hpp"
 #include "Mandelbrot.hpp"
 
@@ -27,6 +30,16 @@ public:
     void render_to_buffer();
     void zoom_in_to(int x, int y);
     void zoom_out_to(int x, int y);
+
+    void increase_depth() {
+        mandelbrot.iteration_depth += 10;
+        cout << mandelbrot.iteration_depth << endl;
+    }
+
+    void decrease_depth() {
+        mandelbrot.iteration_depth -= 10;
+        cout << mandelbrot.iteration_depth << endl;
+    }
 
     // TODO make this private again and move the memcpy into this class
     Colour *buffer;
