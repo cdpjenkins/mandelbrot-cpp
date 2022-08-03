@@ -16,14 +16,11 @@ public:
 
     void main_loop();
 
-    SDL_Renderer *renderer = NULL;
-
-
-    // SDL_Texture *textures[NUM_SPRITES];
+    SDL_Renderer *renderer = nullptr;
 
 private:
-    SDL_Joystick* joystick = NULL;
-    SDL_Window *window = NULL;
+    SDL_Joystick* joystick = nullptr;
+    SDL_Window *window = nullptr;
 
     SDL_Texture *mandelbrot_texture;
 

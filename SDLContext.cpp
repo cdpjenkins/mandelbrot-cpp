@@ -14,7 +14,7 @@ const int HEIGHT = 800;
 
 SDL_Texture *load_texture(SDL_Renderer *renderer, const char *texture_filename) {
     SDL_Texture *texture = IMG_LoadTexture(renderer, texture_filename);
-    if (texture == NULL) {
+    if (texture == nullptr) {
         throw exception();
     }
     return texture;
@@ -32,14 +32,14 @@ SDLContext::SDLContext() : mandie(WIDTH, HEIGHT) {
     SDL_Window *window = SDL_CreateWindow("Mandelbrot!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                         WIDTH, HEIGHT,
                                         SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS);
-    if (window == NULL) {
+    if (window == nullptr) {
         throw exception();
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     mandelbrot_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
-    if (mandelbrot_texture == NULL) {
+    if (mandelbrot_texture == nullptr) {
         cout << "SDL_CreateTexture " << rc << " " << SDL_GetError() <<  endl;
     }
 
@@ -61,7 +61,7 @@ void SDLContext::render_mandie() {
 
     mandie.render_to_buffer();
 
-    if (SDL_LockTexture(mandelbrot_texture, NULL, &texture_pixels, &texture_pitch) != 0) {
+    if (SDL_LockTexture(mandelbrot_texture, nullptr, &texture_pixels, &texture_pitch) != 0) {
         SDL_Log("Unable to lock texture: %s", SDL_GetError());
     }
     else {
@@ -124,7 +124,7 @@ void SDLContext::main_loop() {
             }
         }
 
-        rc = SDL_RenderCopy(renderer, mandelbrot_texture, NULL, NULL);
+        rc = SDL_RenderCopy(renderer, mandelbrot_texture, nullptr, nullptr);
         if (rc != 0) {
             cout << "SDL_RenderCopy " << rc << " " << SDL_GetError() << " " << mandelbrot_texture << endl;
         }
