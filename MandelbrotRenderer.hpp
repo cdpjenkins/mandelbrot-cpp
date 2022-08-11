@@ -51,7 +51,7 @@ private:
     double zoom_size = 4;
     Mandelbrot mandelbrot;
 
-    Complex screen_to_complex(int x, int y);
+    Complex screen_to_complex(int x, int y) const;
 };
 
 #endif // _MANDELBROTRENDERER_HPP

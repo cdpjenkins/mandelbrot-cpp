@@ -69,7 +69,7 @@ void MandelbrotRenderer::render_to_buffer() {
     cout << SDL_GetTicks() - start_time << "ms" <<endl;
 }
 
-Complex MandelbrotRenderer::screen_to_complex(const int x, const int y) {
+Complex MandelbrotRenderer::screen_to_complex(const int x, const int y) const {
     double x_progress = (double)x / screen_width;
     double y_progress = (double)y / screen_height;
 

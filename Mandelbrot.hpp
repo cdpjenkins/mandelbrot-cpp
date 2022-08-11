@@ -9,7 +9,7 @@ public:
         this->iteration_depth = iteration_depth;
     }
 
-    int compute(const Complex& k) ;
+    int compute(const Complex& k) const;
     int iteration_depth;
 };
 

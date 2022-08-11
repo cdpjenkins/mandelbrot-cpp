@@ -13,14 +13,14 @@ public:
         this->im = im;
     }
 
-    inline Complex squared() {
+    inline Complex squared() const {
         double new_re = re*re - im*im;
         double new_im = re * im * 2;
 
         return Complex(new_re, new_im);
     }
 
-    inline void square_and_add(Complex k) {
+    inline void square_and_add(const Complex& k) {
         double new_re = re*re - im*im + k.re;
         double new_im = re * im * 2 + k.im;
 
@@ -28,11 +28,11 @@ public:
         im = new_im;
     }
 
-    inline Complex operator+(const Complex& that) {
+    inline Complex operator+(const Complex& that) const {
         return Complex(this->re + that.re, this->im + that.im);
     }
 
-    inline double norm() {
+    inline double norm() const {
         return re*re + im*im;
     }
 
