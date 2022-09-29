@@ -59,6 +59,8 @@ void SDLContext::render_mandie() {
     int texture_pitch;
     void *texture_pixels;
 
+    // TODO - really want to do this on a separate thread so the GUI doesn't freeze
+    // whilst it's happening
     mandie.render_to_buffer();
 
     if (SDL_LockTexture(mandelbrot_texture, nullptr, &texture_pixels, &texture_pitch) != 0) {
@@ -69,6 +71,12 @@ void SDLContext::render_mandie() {
     }
 
     SDL_UnlockTexture(mandelbrot_texture);
+
+    rc = SDL_RenderCopy(renderer, mandelbrot_texture, nullptr, nullptr);
+    if (rc != 0) {
+        cout << "SDL_RenderCopy " << rc << " " << SDL_GetError() << " " << mandelbrot_texture << endl;
+    }
+    SDL_RenderPresent(renderer);
 }
 
 void SDLContext::main_loop() {
@@ -123,11 +131,5 @@ void SDLContext::main_loop() {
                     break;
             }
         }
-
-        rc = SDL_RenderCopy(renderer, mandelbrot_texture, nullptr, nullptr);
-        if (rc != 0) {
-            cout << "SDL_RenderCopy " << rc << " " << SDL_GetError() << " " << mandelbrot_texture << endl;
-        }
-        SDL_RenderPresent(renderer);
     }
 }
