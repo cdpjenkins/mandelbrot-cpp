@@ -74,7 +74,7 @@ void SDLContext::render_mandie() {
 
     rc = SDL_RenderCopy(renderer, mandelbrot_texture, nullptr, nullptr);
     if (rc != 0) {
-        cout << "SDL_RenderCopy " << rc << " " << SDL_GetError() << " " << mandelbrot_texture << endl;
+        throw runtime_error("SDL_RenderCopy failed with "s + SDL_GetError());
     }
     SDL_RenderPresent(renderer);
 }
