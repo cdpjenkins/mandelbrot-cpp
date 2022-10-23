@@ -6,6 +6,7 @@
 
 #include "SDLContext.hpp"
 #include "MandelbrotRenderer.hpp"
+#include "PngSaver.hpp"
 
 using namespace std;
 
@@ -62,6 +63,8 @@ void SDLContext::render_mandie() {
     // TODO - really want to do this on a separate thread so the GUI doesn't freeze
     // whilst it's happening
     mandie.render_to_buffer();
+
+    PngSaver().save_png(mandie);
 
     if (SDL_LockTexture(mandelbrot_texture, nullptr, &texture_pixels, &texture_pitch) != 0) {
         SDL_Log("Unable to lock texture: %s", SDL_GetError());

@@ -44,9 +44,10 @@ public:
     // TODO make this private again and move the memcpy into this class
     Colour *buffer;
 
-private:
     int screen_width;
     int screen_height;
+private:
+
     Complex centre = Complex(0, 0);
     double zoom_size = 4;
     Mandelbrot mandelbrot;
