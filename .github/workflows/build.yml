@@ -1,0 +1,29 @@
+name: Mandelbrot
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Install packages
+      run: |
+        sudo apt install cmake libsdl2-dev libsdl2-image-dev
+    - name: Build binary
+      run: |
+        echo "Building right now"
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build .
+        echo "Dunnit"
+
+
+
