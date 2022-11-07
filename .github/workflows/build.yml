@@ -24,6 +24,7 @@ jobs:
         cmake ..
         cmake --build .
         echo "Dunnit"
-
-
-
+    - uses: actions/upload-artifact@v3
+      with:
+        name: executable
+        path: build/mandelbrot
