@@ -31,6 +31,8 @@ public:
     void zoom_in_to(int x, int y);
     void zoom_out_to(int x, int y);
 
+    void zoom_in_to(Complex centre, double zoom_factor = 0.7);
+
     void increase_depth() {
         mandelbrot.iteration_depth += 10;
         cout << mandelbrot.iteration_depth << endl;

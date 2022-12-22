@@ -16,6 +16,7 @@ void PngSaver::save_png(MandelbrotRenderer &mandie) {
         mandie.screen_width * SDL_BYTESPERPIXEL(SDL_PIXELFORMAT_RGBA32),
         SDL_PIXELFORMAT_RGBA32
     );
+
     if (!surface) {
         throw runtime_error("Failed creating new surface: "s + SDL_GetError());
     }
