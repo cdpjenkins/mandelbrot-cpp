@@ -10,7 +10,7 @@ using namespace std;
 class MandelbrotRenderer {
 public:
     MandelbrotRenderer(int screen_width, int screen_height)
-        : mandelbrot(400)
+        : mandelbrot(1000)
     {
         this->screen_width = screen_width;
         this->screen_height = screen_height;
@@ -28,7 +28,7 @@ public:
     }
 
     void render_to_buffer();
-    void zoom_in_to(int x, int y);
+    void zoom_in_to(int x, int y, double zoom_factor = 0.7);
     void zoom_out_to(int x, int y);
 
     void zoom_in_to(Complex centre, double zoom_factor = 0.7);
@@ -48,10 +48,11 @@ public:
 
     int screen_width;
     int screen_height;
-private:
 
-    Complex centre = Complex(0, 0);
     double zoom_size = 4;
+
+private:
+    Complex centre = Complex(0, 0);
     Mandelbrot mandelbrot;
 
     Complex screen_to_complex(int x, int y) const;

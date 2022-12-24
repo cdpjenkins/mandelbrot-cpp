@@ -6,6 +6,7 @@
 #include <SDL.h>
 
 #include "MandelbrotRenderer.hpp"
+#include "PngSaver.hpp"
 
 using namespace std;
 
@@ -25,6 +26,8 @@ private:
     SDL_Texture *mandelbrot_texture;
 
     MandelbrotRenderer mandie;
+
+    PngSaver png_saver = PngSaver();
 
     void render_mandie();
 };

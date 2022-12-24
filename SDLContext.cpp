@@ -64,7 +64,7 @@ void SDLContext::render_mandie() {
     // whilst it's happening
     mandie.render_to_buffer();
 
-    PngSaver().save_png(mandie);
+    png_saver.save_png(mandie);
 
     if (SDL_LockTexture(mandelbrot_texture, nullptr, &texture_pixels, &texture_pitch) != 0) {
         SDL_Log("Unable to lock texture: %s", SDL_GetError());
@@ -134,5 +134,14 @@ void SDLContext::main_loop() {
                     break;
             }
         }
+
+        // TODO make this configurable through command line param
+        // 
+        // mandie.zoom_in_to(Complex(-1.25721, 0.379069), 0.99);
+        // render_mandie();
+
+        // if (mandie.zoom_size < 0.00000299619) {
+        //     break;
+        // }
     }
 }

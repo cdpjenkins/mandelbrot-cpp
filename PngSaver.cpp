@@ -3,6 +3,8 @@ using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
 
+// #include <stdio>
+// using namespace std;
 
 #include "PngSaver.hpp"
 #include "MandelbrotRenderer.hpp"
@@ -21,7 +23,11 @@ void PngSaver::save_png(MandelbrotRenderer &mandie) {
         throw runtime_error("Failed creating new surface: "s + SDL_GetError());
     }
 
-    int rc = IMG_SavePNG(surface, "mandie.png");
+    char png_name[100];
+    sprintf(png_name, "pngs/mandie_%05d.png", png_counter++);
+
+    cout << "saving " << png_name << endl;
+    int rc = IMG_SavePNG(surface, png_name);
     if (!rc) {
         // throw runtime_error("Failed to save PNG:"s + SDL_GetError());
 
