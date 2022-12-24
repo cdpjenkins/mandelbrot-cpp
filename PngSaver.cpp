@@ -1,5 +1,7 @@
 #include <iostream>
+#include <sstream>
 using namespace std;
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -23,15 +25,12 @@ void PngSaver::save_png(MandelbrotRenderer &mandie) {
         throw runtime_error("Failed creating new surface: "s + SDL_GetError());
     }
 
-    // TODO - pretty sure there's a C++ thing we could use here that would be preferrable
-    char png_name[100];
-    snprintf(png_name, sizeof(png_name), "pngs/mandie_%05d.png", png_counter++);
+    ostringstream png_name;
+    png_name << "pngs/mandie_" << png_counter++ << ".png";
 
-    cout << "saving " << png_name << endl;
-    int rc = IMG_SavePNG(surface, png_name);
-    if (!rc) {
-        // throw runtime_error("Failed to save PNG:"s + SDL_GetError());
-
-        cout << rc << " " << SDL_GetError() << endl;
+    cout << "saving " << png_name.str() << endl;
+    int rc = IMG_SavePNG(surface, png_name.str().c_str());
+    if (rc != 0) {
+        throw runtime_error("Failed to save PNG: "s + SDL_GetError());
     }
 }
