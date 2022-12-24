@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iterator>
 #include <string>
-
+#include <sstream>
 
 #include <SDL.h>
 #include <SDL_error.h>
@@ -28,8 +28,16 @@ int main(int argc, char** argv) {
             config.max_zoom = stod(argv[++i]);
         } else if (arg_key == "--png-base") {
             config.png_base = argv[++i];
-        } else if (arg_key == "--auto-zoom") {
+        } else if (arg_key == "--auto-zoom-to") {
             config.auto_zoom = true;
+
+            // TODO move this "lovely" parsing code maybe into Complex class
+            istringstream coords_stringstream(argv[++i]);
+            string re_string;
+            string im_string;
+            getline(coords_stringstream, re_string, ',');
+            getline(coords_stringstream, im_string, ',');
+            config.zoom_to = Complex(stod(re_string), stod(im_string));
         }
     }
 

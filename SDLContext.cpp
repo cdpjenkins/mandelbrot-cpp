@@ -139,7 +139,7 @@ void SDLContext::main_loop() {
         }
 
         if (config.auto_zoom) {
-            mandie.zoom_in_to(Complex(-1.25721, 0.379069));
+            mandie.zoom_in_to(config.zoom_to);
             render_mandie();
 
             if (mandie.zoom_size < config.max_zoom) {

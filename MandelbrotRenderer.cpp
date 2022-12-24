@@ -92,7 +92,7 @@ void MandelbrotRenderer::zoom_in_to(const int x, const int y) {
     zoom_in_to(centre);
 }
 
-void MandelbrotRenderer::zoom_in_to(Complex centre) {
+void MandelbrotRenderer::zoom_in_to(Complex & centre) {
     zoom_size *= config.zoom_factor;
     this->centre = centre;
 
