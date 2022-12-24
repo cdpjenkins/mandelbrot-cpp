@@ -21,7 +21,10 @@ SDL_Texture *load_texture(SDL_Renderer *renderer, const char *texture_filename) 
     return texture;
 }
 
-SDLContext::SDLContext() : mandie(WIDTH, HEIGHT) {
+SDLContext::SDLContext(Config & config) :
+        config(config),
+        mandie(WIDTH, HEIGHT, config),
+        png_saver(PngSaver(config.png_base)) {
 
     int rc = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
     if (rc != 0) {
@@ -135,13 +138,13 @@ void SDLContext::main_loop() {
             }
         }
 
-        // TODO make this configurable through command line param
-        // 
-        // mandie.zoom_in_to(Complex(-1.25721, 0.379069), 0.99);
-        // render_mandie();
+        if (config.auto_zoom) {
+            mandie.zoom_in_to(Complex(-1.25721, 0.379069));
+            render_mandie();
 
-        // if (mandie.zoom_size < 0.00000299619) {
-        //     break;
-        // }
+            if (mandie.zoom_size < config.max_zoom) {
+                break;
+            }
+        }
     }
 }

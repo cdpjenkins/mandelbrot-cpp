@@ -26,7 +26,7 @@ void PngSaver::save_png(MandelbrotRenderer &mandie) {
     }
 
     ostringstream png_name;
-    png_name << "pngs/mandie_" << png_counter++ << ".png";
+    png_name << png_base << png_counter++ << ".png";
 
     cout << "saving " << png_name.str() << endl;
     int rc = IMG_SavePNG(surface, png_name.str().c_str());

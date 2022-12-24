@@ -4,11 +4,14 @@
 #include "MandelbrotRenderer.hpp"
 
 class PngSaver {
+public:
+    PngSaver(string & png_base) :
+        png_base(png_base) {} 
+    void save_png(MandelbrotRenderer &mandie);
+
 private:
     int png_counter {0};
-
-public:
-    void save_png(MandelbrotRenderer &mandie);
+    string png_base;
 };
 
 #endif // _PNG_SAVER_HPP

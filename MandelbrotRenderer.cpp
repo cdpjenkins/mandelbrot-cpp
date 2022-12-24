@@ -86,14 +86,14 @@ Complex MandelbrotRenderer::screen_to_complex(const int x, const int y) const {
     return Complex(re, im);
 }
 
-void MandelbrotRenderer::zoom_in_to(const int x, const int y, double zoom_factor) {
+void MandelbrotRenderer::zoom_in_to(const int x, const int y) {
     centre = screen_to_complex(x, y);
 
-    zoom_in_to(centre, zoom_factor);
+    zoom_in_to(centre);
 }
 
-void MandelbrotRenderer::zoom_in_to(Complex centre, double zoom_factor) {
-    zoom_size *= zoom_factor;
+void MandelbrotRenderer::zoom_in_to(Complex centre) {
+    zoom_size *= config.zoom_factor;
     this->centre = centre;
 
     render_to_buffer();
@@ -103,7 +103,7 @@ void MandelbrotRenderer::zoom_in_to(Complex centre, double zoom_factor) {
 
 void MandelbrotRenderer::zoom_out_to(const int x, const int y) {
     centre = screen_to_complex(x, y);
-    zoom_size /= 0.7;
+    zoom_size /= config.zoom_factor;
     render_to_buffer();
 
     cout << x << ", " << y << endl;

@@ -5,14 +5,16 @@
 
 #include <SDL.h>
 
+#include "Config.hpp"
 #include "MandelbrotRenderer.hpp"
 #include "PngSaver.hpp"
+
 
 using namespace std;
 
 class SDLContext {
 public:
-    SDLContext();
+    SDLContext(Config & config);
     ~SDLContext();
 
     void main_loop();
@@ -20,6 +22,7 @@ public:
     SDL_Renderer *renderer = nullptr;
 
 private:
+    Config config;
     SDL_Joystick* joystick = nullptr;
     SDL_Window *window = nullptr;
 
@@ -27,7 +30,7 @@ private:
 
     MandelbrotRenderer mandie;
 
-    PngSaver png_saver = PngSaver();
+    PngSaver png_saver;
 
     void render_mandie();
 };

@@ -18,12 +18,10 @@ jobs:
         sudo apt install cmake libsdl2-dev libsdl2-image-dev
     - name: Build binary
       run: |
-        echo "Building right now"
         mkdir build
         cd build
         cmake ..
         cmake --build .
-        echo "Dunnit"
     - uses: actions/upload-artifact@v3
       with:
         name: executable

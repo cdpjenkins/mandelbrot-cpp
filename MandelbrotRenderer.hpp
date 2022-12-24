@@ -5,12 +5,14 @@
 using namespace std;
 
 #include "Colour.hpp"
+#include "Config.hpp"
 #include "Mandelbrot.hpp"
 
 class MandelbrotRenderer {
 public:
-    MandelbrotRenderer(int screen_width, int screen_height)
-        : mandelbrot(1000)
+    MandelbrotRenderer(int screen_width, int screen_height, Config & config) : 
+        mandelbrot(config.iteration_depth),
+        config(config)
     {
         this->screen_width = screen_width;
         this->screen_height = screen_height;
@@ -28,10 +30,10 @@ public:
     }
 
     void render_to_buffer();
-    void zoom_in_to(int x, int y, double zoom_factor = 0.7);
+    void zoom_in_to(int x, int y);
     void zoom_out_to(int x, int y);
 
-    void zoom_in_to(Complex centre, double zoom_factor = 0.7);
+    void zoom_in_to(Complex centre);
 
     void increase_depth() {
         mandelbrot.iteration_depth += 10;
@@ -52,6 +54,7 @@ public:
     double zoom_size = 4;
 
 private:
+    Config config;
     Complex centre = Complex(0, 0);
     Mandelbrot mandelbrot;
 
