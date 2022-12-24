@@ -23,8 +23,9 @@ void PngSaver::save_png(MandelbrotRenderer &mandie) {
         throw runtime_error("Failed creating new surface: "s + SDL_GetError());
     }
 
+    // TODO - pretty sure there's a C++ thing we could use here that would be preferrable
     char png_name[100];
-    sprintf(png_name, "pngs/mandie_%05d.png", png_counter++);
+    snprintf(png_name, sizeof(png_name), "pngs/mandie_%05d.png", png_counter++);
 
     cout << "saving " << png_name << endl;
     int rc = IMG_SavePNG(surface, png_name);
