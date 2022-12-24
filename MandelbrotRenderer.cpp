@@ -1,11 +1,12 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 #include <SDL.h>
 
 #include "MandelbrotRenderer.hpp"
 
-const int colour_cycle_period = 120;
+const int colour_cycle_period = 256;
 
 Colour iterations_to_rgb(int iterations) {
     // This is kind of like doing HSV to RGB conversation, except:
@@ -94,10 +95,10 @@ void MandelbrotRenderer::zoom_in_to(const int x, const int y, double zoom_factor
 void MandelbrotRenderer::zoom_in_to(Complex centre, double zoom_factor) {
     zoom_size *= zoom_factor;
     this->centre = centre;
-    
+
     render_to_buffer();
 
-    cout << centre.re << " + " << centre.im << "i" << " " << zoom_size << endl;
+    cout << setprecision(30) << centre.re << " + " << centre.im << "i" << " " << zoom_size << endl;
 }
 
 void MandelbrotRenderer::zoom_out_to(const int x, const int y) {
