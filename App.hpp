@@ -10,9 +10,9 @@ const int HEIGHT = 800;
 
 class App {
 public:
-    App(Config & config, SDLContext & sdl) :
+    App(Config & config) :
         config(config),
-        sdl(sdl),
+        sdl(SDLContext()),
         mandie(WIDTH, HEIGHT, config),
         png_saver(PngSaver(config.png_base))
     {
