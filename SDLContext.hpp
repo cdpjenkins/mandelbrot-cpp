@@ -14,25 +14,20 @@ using namespace std;
 
 class SDLContext {
 public:
-    SDLContext(Config & config);
+    SDLContext();
     ~SDLContext();
 
     void main_loop();
 
     SDL_Renderer *renderer = nullptr;
 
+    void copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie);
+
 private:
-    Config config;
     SDL_Joystick* joystick = nullptr;
     SDL_Window *window = nullptr;
 
     SDL_Texture *mandelbrot_texture;
-
-    MandelbrotRenderer mandie;
-
-    PngSaver png_saver;
-
-    void render_mandie();
 };
 
 #endif // SDL_CONTEXT_HPP

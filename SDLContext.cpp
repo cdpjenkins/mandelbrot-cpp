@@ -21,10 +21,7 @@ SDL_Texture *load_texture(SDL_Renderer *renderer, const char *texture_filename) 
     return texture;
 }
 
-SDLContext::SDLContext(Config & config) :
-        config(config),
-        mandie(WIDTH, HEIGHT, config),
-        png_saver(PngSaver(config.png_base)) {
+SDLContext::SDLContext() {
 
     int rc = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
     if (rc != 0) {
@@ -58,16 +55,10 @@ SDLContext::~SDLContext() {
     SDL_Quit();
 }
 
-void SDLContext::render_mandie() {
+void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
     int rc;
     int texture_pitch;
     void *texture_pixels;
-
-    // TODO - really want to do this on a separate thread so the GUI doesn't freeze
-    // whilst it's happening
-    mandie.render_to_buffer();
-
-    png_saver.save_png(mandie);
 
     if (SDL_LockTexture(mandelbrot_texture, nullptr, &texture_pixels, &texture_pitch) != 0) {
         SDL_Log("Unable to lock texture: %s", SDL_GetError());
@@ -86,65 +77,5 @@ void SDLContext::render_mandie() {
 }
 
 void SDLContext::main_loop() {
-    int rc;
-
-    Uint32 start_time;
-
-    render_mandie();
-
-    bool quit = false;
-    while (!quit) {
-        SDL_Event e;
-        while (SDL_PollEvent(&e)) {
-            switch (e.type) {
-                case SDL_QUIT:
-                    quit = true;
-                    break;
-                case SDL_KEYDOWN:
-                    switch (e.key.keysym.scancode) {
-                        case SDL_SCANCODE_Q:
-                            quit = true;
-                            break;
-                        case SDL_SCANCODE_P:
-                            cout << "increase depth" << endl;
-                            mandie.increase_depth();
-                            render_mandie();
-                            break;
-                        case SDL_SCANCODE_L:
-                            cout << "decrease depth" << endl;
-                            mandie.decrease_depth();
-                            render_mandie();
-                            break;
-                        case SDL_SCANCODE_KP_ENTER:
-                            render_mandie();
-                            break;
-                        default:
-                            // meh, don't care about other keys
-                            break;
-                    }
-                    break;
-                case SDL_MOUSEBUTTONUP:
-                    cout << "button: " << (int)e.button.button << endl;
-
-                    if (e.button.button == SDL_BUTTON_LEFT) {
-                        mandie.zoom_in_to(e.button.x, e.button.y);
-                    } else {
-                        mandie.zoom_out_to(e.button.x, e.button.y);
-                    }
-
-                    render_mandie();
-
-                    break;
-            }
-        }
-
-        if (config.auto_zoom) {
-            mandie.zoom_in_to(config.zoom_to);
-            render_mandie();
-
-            if (mandie.zoom_size < config.max_zoom) {
-                break;
-            }
-        }
-    }
+    cout << "lalalala do not call me" <<endl;
 }
