@@ -14,6 +14,8 @@ public:
     string png_base = "pngs/mandie_"s;
     bool auto_zoom = false;
     Complex zoom_to = Complex(0, 0);
+
+    static Config parse(int argc, char** argv);
 };
 
 #endif // _CONFIG_HPP

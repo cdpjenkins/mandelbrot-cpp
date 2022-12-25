@@ -12,10 +12,11 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
 add_executable(mandelbrot
         main.cpp
+        Config.cpp
         Mandelbrot.cpp
         MandelbrotRenderer.cpp
-        SDLContext.cpp
         PngSaver.cpp
+        SDLContext.cpp
     )
 
 target_link_libraries(mandelbrot ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
