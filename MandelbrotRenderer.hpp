@@ -22,6 +22,8 @@ public:
 
     ~MandelbrotRenderer()
     {
+        cout << "~MandelbrotRenderer()" << endl;
+
         delete buffer;
     }
 
@@ -31,9 +33,8 @@ public:
 
     void render_to_buffer();
     void zoom_in_to(int x, int y);
-    void zoom_out_to(int x, int y);
-
     void zoom_in_to(Complex & centre);
+    void zoom_out_to(int x, int y);
 
     void increase_depth() {
         mandelbrot.iteration_depth += 10;

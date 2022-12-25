@@ -1,6 +1,10 @@
 #ifndef _APP_HPP
 #define _APP_HPP
 
+#include <memory>
+
+using namespace std;
+
 #include "Config.hpp"
 #include "SDLContext.hpp"
 
@@ -11,9 +15,11 @@ const int HEIGHT = 800;
 class App {
 public:
     App(Config & config) :
+        width(WIDTH),
+        height(HEIGHT),
         config(config),
         sdl(SDLContext()),
-        mandie(WIDTH, HEIGHT, config),
+        mandie(make_unique<MandelbrotRenderer>(WIDTH, HEIGHT, config)),
         png_saver(PngSaver(config.png_base))
     {
         // constructor body left intentionally blank
@@ -25,7 +31,10 @@ private:
     Config config;
     SDLContext sdl;
 
-    MandelbrotRenderer mandie;
+    int width;
+    int height;
+
+    unique_ptr<MandelbrotRenderer> mandie;
     PngSaver png_saver;
     void render_mandie();
 };
