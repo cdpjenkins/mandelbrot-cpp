@@ -26,7 +26,7 @@ SDLContext::SDLContext() :
     img_init_rc(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)),
     window(SDL_CreateWindow("Mandelbrot!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                         WIDTH, HEIGHT,
-                                        SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS)),
+                                        SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS)),
     renderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)),
     mandelbrot_texture(make_unique<SDLTextureWrapper>(window, renderer, WIDTH, HEIGHT))
 {

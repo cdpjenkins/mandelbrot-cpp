@@ -24,12 +24,12 @@ void App::main_loop() {
                             break;
                         case SDL_SCANCODE_P:
                             cout << "increase depth" << endl;
-                            mandie->increase_depth();
+                            mandelbrot_renderer->increase_depth();
                             render_mandie();
                             break;
                         case SDL_SCANCODE_L:
                             cout << "decrease depth" << endl;
-                            mandie->decrease_depth();
+                            mandelbrot_renderer->decrease_depth();
                             render_mandie();
                             break;
                         case SDL_SCANCODE_KP_ENTER:
@@ -47,22 +47,33 @@ void App::main_loop() {
                     cout << "button: " << (int)e.button.button << endl;
 
                     if (e.button.button == SDL_BUTTON_LEFT) {
-                        mandie->zoom_in_to(e.button.x, e.button.y);
+                        mandelbrot_renderer->zoom_in_to(e.button.x, e.button.y);
                     } else {
-                        mandie->zoom_out_to(e.button.x, e.button.y);
+                        mandelbrot_renderer->zoom_out_to(e.button.x, e.button.y);
                     }
 
                     render_mandie();
 
                     break;
+                case SDL_WINDOWEVENT:
+                    switch (e.window.event) {
+                        case SDL_WINDOWEVENT_RESIZED:
+                            width = e.window.data1;
+                            height = e.window.data2;
+                            cout << "resized: " << e.window.windowID << " " << width << ", " << height << endl;
+                            sdl.resize(width, width);
+                            mandelbrot_renderer.reset(new MandelbrotRenderer(width, height, config));
+                            break;
+                    }
+                    break;
             }
         }
 
         if (config.auto_zoom) {
-            mandie->zoom_in_to(config.zoom_to);
+            mandelbrot_renderer->zoom_in_to(config.zoom_to);
             render_mandie();
 
-            if (mandie->zoom_size < config.max_zoom) {
+            if (mandelbrot_renderer->zoom_size < config.max_zoom) {
                 break;
             }
         }
@@ -72,7 +83,7 @@ void App::main_loop() {
 void App::render_mandie() {
     // TODO - really want to do this on a separate thread so the GUI doesn't freeze
     // whilst it's happening
-    mandie->render_to_buffer();
-    png_saver.save_png(*mandie);
-    sdl.copy_rendered_mandie_to_screen(*mandie);
+    mandelbrot_renderer->render_to_buffer();
+    png_saver.save_png(*mandelbrot_renderer);
+    sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
 }

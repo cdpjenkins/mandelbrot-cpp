@@ -19,7 +19,7 @@ public:
         height(HEIGHT),
         config(config),
         sdl(SDLContext()),
-        mandie(make_unique<MandelbrotRenderer>(WIDTH, HEIGHT, config)),
+        mandelbrot_renderer(make_unique<MandelbrotRenderer>(WIDTH, HEIGHT, config)),
         png_saver(PngSaver(config.png_base))
     {
         // constructor body left intentionally blank
@@ -34,7 +34,7 @@ private:
     int width;
     int height;
 
-    unique_ptr<MandelbrotRenderer> mandie;
+    unique_ptr<MandelbrotRenderer> mandelbrot_renderer;
     PngSaver png_saver;
     void render_mandie();
 };
