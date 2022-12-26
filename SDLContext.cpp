@@ -10,8 +10,8 @@
 
 using namespace std;
 
-const int WIDTH = 1280;
-const int HEIGHT = 800;
+const int INITIAL_WIDTH = 1280;
+const int INITIAL_HEIGHT = 800;
 
 SDL_Texture *load_texture(SDL_Renderer *renderer, const char *texture_filename) {
     SDL_Texture *texture = IMG_LoadTexture(renderer, texture_filename);
@@ -25,10 +25,10 @@ SDLContext::SDLContext() :
     sdl_init_rc(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK)),
     img_init_rc(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)),
     window(SDL_CreateWindow("Mandelbrot!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                        WIDTH, HEIGHT,
+                                        INITIAL_WIDTH, INITIAL_HEIGHT,
                                         SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS)),
     renderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)),
-    mandelbrot_texture(make_unique<SDLTextureWrapper>(window, renderer, WIDTH, HEIGHT))
+    mandelbrot_texture(make_unique<SDLTextureWrapper>(window, renderer, INITIAL_WIDTH, INITIAL_HEIGHT))
 {
     // TODO try turning texture, renderer and window into RAII objects so we don't have to manually destroy stuff in destructor
 
@@ -54,14 +54,22 @@ void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
         SDL_Log("Unable to lock texture: %s", SDL_GetError());
     }
     else {
-        memcpy(texture_pixels, mandie.buffer, texture_pitch * HEIGHT);
+
+        cout << "texture_pitch: " << texture_pitch << endl;
+        cout << "mandie.screen_width: " << mandie.screen_width << endl;   
+        cout << "mandie.screen_height: " << mandie.screen_height << endl;   
+
+        memcpy(texture_pixels, mandie.buffer, texture_pitch * mandie.screen_height);
     }
 
     SDL_UnlockTexture(mandelbrot_texture->texture);
 
     cout << "about to copy thar texture. renderer: " << renderer << endl;
 
-    rc = SDL_RenderCopy(renderer, mandelbrot_texture->texture, nullptr, nullptr);
+    SDL_Rect src_rect = { 0, 0, mandie.screen_width, mandie.screen_height };
+    SDL_Rect dest_rect = { 0, 0, mandie.screen_width, mandie.screen_height };
+
+    rc = SDL_RenderCopy(renderer, mandelbrot_texture->texture, &src_rect, &dest_rect);
     if (rc != 0) {
         throw runtime_error("SDL_RenderCopy failed with "s + SDL_GetError());
     }

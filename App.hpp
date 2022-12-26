@@ -8,19 +8,18 @@ using namespace std;
 #include "Config.hpp"
 #include "SDLContext.hpp"
 
-// TODO don't hardcode these forever innit... or maybe call them INITIAL_WIDTH|HEIGHT
-const int WIDTH = 1280;
-const int HEIGHT = 800;
+const int INITIAL_WIDTH = 1280;
+const int INITIAL_HEIGHT = 800;
 
 class App {
 public:
     App(Config & config) :
-        width(WIDTH),
-        height(HEIGHT),
+        width(INITIAL_WIDTH),
+        height(INITIAL_HEIGHT),
         config(config),
         sdl(SDLContext()),
         mandelbrot(config.iteration_depth),
-        mandelbrot_renderer(make_unique<MandelbrotRenderer>(WIDTH, HEIGHT, config)),
+        mandelbrot_renderer(make_unique<MandelbrotRenderer>(width, height, config)),
         png_saver(PngSaver(config.png_base))
     {
         // constructor body left intentionally blank

@@ -10,14 +10,19 @@ using namespace std;
 
 class MandelbrotRenderer {
 public:
-    MandelbrotRenderer(int screen_width, int screen_height, Config & config) : 
+    MandelbrotRenderer(
+        int screen_width,
+        int screen_height,
+        Config & config,
+        Complex centre = Complex(0, 0),
+        double zoom_size = 4.0
+    ) : 
         screen_width(screen_width),
         screen_height(screen_height),
-        config(config)
+        config(config),
+        centre(centre),
+        zoom_size(zoom_size)
     {
-        // this->screen_width = screen_width;
-        // this->screen_height = screen_height;
-
         // TODO move me into initialiser as well...
         buffer = new Colour[screen_width * screen_height];
     }
@@ -45,11 +50,10 @@ public:
     int screen_height;
 
     double zoom_size = 4;
+    Complex centre = Complex(0, 0);
 
 private:
     Config config;
-    Complex centre = Complex(0, 0);
-
     Complex screen_to_complex(int x, int y) const;
 };
 

@@ -64,7 +64,9 @@ void App::main_loop() {
                             height = e.window.data2;
                             cout << "resized: " << e.window.windowID << " " << width << ", " << height << endl;
                             sdl.resize(width, width);
-                            mandelbrot_renderer.reset(new MandelbrotRenderer(width, height, config));
+                            mandelbrot_renderer.reset(
+                                new MandelbrotRenderer(width, height, config, mandelbrot_renderer->centre, mandelbrot_renderer->zoom_size));
+                            render_mandie();
                             break;
                     }
                     break;
