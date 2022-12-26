@@ -21,28 +21,16 @@ SDL_Texture *load_texture(SDL_Renderer *renderer, const char *texture_filename) 
     return texture;
 }
 
-SDLContext::SDLContext() {
-
-    int rc = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
-    if (rc != 0) {
-        throw runtime_error("SDL_Init failed");
-    }
-
-    IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
-
-    SDL_Window *window = SDL_CreateWindow("Mandelbrot!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+SDLContext::SDLContext() :
+    sdl_init_rc(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK)),
+    img_init_rc(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)),
+    window(SDL_CreateWindow("Mandelbrot!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                         WIDTH, HEIGHT,
-                                        SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS);
-    if (window == nullptr) {
-        throw runtime_error("Failed to create SDL_Window");
-    }
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-    mandelbrot_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
-    if (mandelbrot_texture == nullptr) {
-        cout << "SDL_CreateTexture " << rc << " " << SDL_GetError() <<  endl;
-    }
+                                        SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS)),
+    renderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)),
+    mandelbrot_texture(make_unique<SDLTextureWrapper>(window, renderer, WIDTH, HEIGHT))
+{
+    // TODO try turning texture, renderer and window into RAII objects so we don't have to manually destroy stuff in destructor
 
     SDL_UpdateWindowSurface(window);
 }
@@ -60,16 +48,20 @@ void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
     int texture_pitch;
     void *texture_pixels;
 
-    if (SDL_LockTexture(mandelbrot_texture, nullptr, &texture_pixels, &texture_pitch) != 0) {
+    // TODO use RAII to make this a bit less hairy...
+
+    if (SDL_LockTexture(mandelbrot_texture->texture, nullptr, &texture_pixels, &texture_pitch) != 0) {
         SDL_Log("Unable to lock texture: %s", SDL_GetError());
     }
     else {
         memcpy(texture_pixels, mandie.buffer, texture_pitch * HEIGHT);
     }
 
-    SDL_UnlockTexture(mandelbrot_texture);
+    SDL_UnlockTexture(mandelbrot_texture->texture);
 
-    rc = SDL_RenderCopy(renderer, mandelbrot_texture, nullptr, nullptr);
+    cout << "about to copy thar texture. renderer: " << renderer << endl;
+
+    rc = SDL_RenderCopy(renderer, mandelbrot_texture->texture, nullptr, nullptr);
     if (rc != 0) {
         throw runtime_error("SDL_RenderCopy failed with "s + SDL_GetError());
     }

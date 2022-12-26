@@ -70,8 +70,6 @@ void App::render_mandie() {
     // TODO - really want to do this on a separate thread so the GUI doesn't freeze
     // whilst it's happening
     mandie->render_to_buffer();
-
     png_saver.save_png(*mandie);
-
     sdl.copy_rendered_mandie_to_screen(*mandie);
 }
