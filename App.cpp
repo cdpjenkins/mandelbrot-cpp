@@ -35,6 +35,9 @@ void App::main_loop() {
                         case SDL_SCANCODE_KP_ENTER:
                             render_mandie();
                             break;
+                        case SDL_SCANCODE_R:
+                            sdl.resize(width, height);
+                            break;
                         default:
                             // meh, don't care about other keys
                             break;

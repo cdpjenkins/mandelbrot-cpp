@@ -71,3 +71,7 @@ void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
 void SDLContext::main_loop() {
     cout << "lalalala do not call me" <<endl;
 }
+
+void SDLContext::resize(int width, int height) {
+    mandelbrot_texture.reset(new SDLTextureWrapper(window, renderer, width, height));
+}

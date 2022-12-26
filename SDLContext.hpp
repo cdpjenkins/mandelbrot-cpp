@@ -29,6 +29,7 @@ public:
     }
 
     ~SDLTextureWrapper() {
+        cout << "~SDLTextureWrapper" << endl;
         SDL_DestroyTexture(texture);
     }
 
@@ -41,9 +42,8 @@ public:
     ~SDLContext();
 
     void main_loop();
-
-
     void copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie);
+    void resize(int width, int height);
 
 private:
     int sdl_init_rc;
