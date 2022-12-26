@@ -11,12 +11,14 @@ using namespace std;
 class MandelbrotRenderer {
 public:
     MandelbrotRenderer(int screen_width, int screen_height, Config & config) : 
-        mandelbrot(config.iteration_depth),
+        screen_width(screen_width),
+        screen_height(screen_height),
         config(config)
     {
-        this->screen_width = screen_width;
-        this->screen_height = screen_height;
+        // this->screen_width = screen_width;
+        // this->screen_height = screen_height;
 
+        // TODO move me into initialiser as well...
         buffer = new Colour[screen_width * screen_height];
     }
 
@@ -31,20 +33,10 @@ public:
         return buffer[y * screen_width + x];
     }
 
-    void render_to_buffer();
+    void render_to_buffer(Mandelbrot & mandelbrot);
     void zoom_in_to(int x, int y);
     void zoom_in_to(Complex & centre);
     void zoom_out_to(int x, int y);
-
-    void increase_depth() {
-        mandelbrot.iteration_depth += 10;
-        cout << mandelbrot.iteration_depth << endl;
-    }
-
-    void decrease_depth() {
-        mandelbrot.iteration_depth -= 10;
-        cout << mandelbrot.iteration_depth << endl;
-    }
 
     // TODO make this private again and move the memcpy into this class
     Colour *buffer;
@@ -57,7 +49,6 @@ public:
 private:
     Config config;
     Complex centre = Complex(0, 0);
-    Mandelbrot mandelbrot;
 
     Complex screen_to_complex(int x, int y) const;
 };

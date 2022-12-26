@@ -47,7 +47,7 @@ Colour iterations_to_rgb(int iterations) {
     }
 }
 
-void MandelbrotRenderer::render_to_buffer() {
+void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
 
     Uint32 start_time = SDL_GetTicks();
 
@@ -95,16 +95,11 @@ void MandelbrotRenderer::zoom_in_to(const int x, const int y) {
 void MandelbrotRenderer::zoom_in_to(Complex & centre) {
     zoom_size *= config.zoom_factor;
     this->centre = centre;
-
-    render_to_buffer();
-
     cout << setprecision(30) << centre.re << " + " << centre.im << "i" << " " << zoom_size << endl;
 }
 
 void MandelbrotRenderer::zoom_out_to(const int x, const int y) {
     centre = screen_to_complex(x, y);
     zoom_size /= config.zoom_factor;
-    render_to_buffer();
-
     cout << x << ", " << y << endl;
 }

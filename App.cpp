@@ -24,12 +24,14 @@ void App::main_loop() {
                             break;
                         case SDL_SCANCODE_P:
                             cout << "increase depth" << endl;
-                            mandelbrot_renderer->increase_depth();
+                            mandelbrot.iteration_depth += 10;
+                            cout << mandelbrot.iteration_depth << endl;
                             render_mandie();
                             break;
                         case SDL_SCANCODE_L:
                             cout << "decrease depth" << endl;
-                            mandelbrot_renderer->decrease_depth();
+                            mandelbrot.iteration_depth -= 10;
+                            cout << mandelbrot.iteration_depth << endl;
                             render_mandie();
                             break;
                         case SDL_SCANCODE_KP_ENTER:
@@ -83,7 +85,7 @@ void App::main_loop() {
 void App::render_mandie() {
     // TODO - really want to do this on a separate thread so the GUI doesn't freeze
     // whilst it's happening
-    mandelbrot_renderer->render_to_buffer();
+    mandelbrot_renderer->render_to_buffer(mandelbrot);
     png_saver.save_png(*mandelbrot_renderer);
     sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
 }

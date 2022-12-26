@@ -19,6 +19,7 @@ public:
         height(HEIGHT),
         config(config),
         sdl(SDLContext()),
+        mandelbrot(config.iteration_depth),
         mandelbrot_renderer(make_unique<MandelbrotRenderer>(WIDTH, HEIGHT, config)),
         png_saver(PngSaver(config.png_base))
     {
@@ -34,6 +35,7 @@ private:
     int width;
     int height;
 
+    Mandelbrot mandelbrot;
     unique_ptr<MandelbrotRenderer> mandelbrot_renderer;
     PngSaver png_saver;
     void render_mandie();
