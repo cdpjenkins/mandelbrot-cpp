@@ -41,6 +41,7 @@ public:
     void main_loop();
     void copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie);
     void resize(int width, int height);
+    void send_redraw_event(MandelbrotRenderer& renderer);
 
 private:
     int sdl_init_rc;
@@ -48,6 +49,7 @@ private:
     SDL_Window *window = nullptr;
     SDL_Joystick* joystick = nullptr;
 public:
+    const uint32_t redraw_event_id;
     SDL_Renderer *renderer;
 private:
     // SDL_Texture *mandelbrot_texture;

@@ -28,7 +28,8 @@ SDLContext::SDLContext() :
                                         INITIAL_WIDTH, INITIAL_HEIGHT,
                                         SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS)),
     renderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)),
-    mandelbrot_texture(make_unique<SDLTextureWrapper>(window, renderer, INITIAL_WIDTH, INITIAL_HEIGHT))
+    mandelbrot_texture(make_unique<SDLTextureWrapper>(window, renderer, INITIAL_WIDTH, INITIAL_HEIGHT)),
+    redraw_event_id(SDL_RegisterEvents(1))
 {
     // TODO try turning texture, renderer and window into RAII objects so we don't have to manually destroy stuff in destructor
 
@@ -77,4 +78,16 @@ void SDLContext::main_loop() {
 
 void SDLContext::resize(int width, int height) {
     mandelbrot_texture.reset(new SDLTextureWrapper(window, renderer, width, height));
+}
+
+void SDLContext::send_redraw_event(MandelbrotRenderer &renderer) {
+    if (redraw_event_id != ((Uint32)-1)) {
+        SDL_Event event;
+        memset(&event, 0, sizeof(event));
+        event.type = redraw_event_id;
+        event.user.code = 0; // TODO call this REDRAW or something
+        event.user.data1 = &renderer;
+        event.user.data2 = 0;
+        SDL_PushEvent(&event);
+    }
 }

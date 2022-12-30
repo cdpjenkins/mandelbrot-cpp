@@ -74,6 +74,16 @@ void App::main_loop() {
                     }
                     break;
             }
+
+            if (e.type == sdl.redraw_event_id) {
+                // may have multiple types but not yet so screw it...
+
+                // alright so how do we make sure that the mandie renderer definitely definitely has not been
+                // deleted prior to us hitting this code...
+                // hey I guess there will always be *a* renderer... just maybe not the one that generated this
+                // event.../
+                sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
+            }
         }
 
         if (config.auto_zoom) {
@@ -94,9 +104,11 @@ void App::render_mandie() {
     auto render_lambda = [this] {
         mandelbrot_renderer->render_to_buffer(mandelbrot);
         png_saver.save_png(*mandelbrot_renderer);
-        sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
+//        sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
+
+        sdl.send_redraw_event(*mandelbrot_renderer);
     };
 
     std::thread render_thread(render_lambda);
-    render_thread.join();
+    render_thread.detach();
 }
