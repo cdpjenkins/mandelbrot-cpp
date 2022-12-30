@@ -1,6 +1,7 @@
 #include "App.hpp"
 
 #include <memory>
+#include <thread>
 
 void App::main_loop() {
     int rc;
@@ -89,7 +90,13 @@ void App::main_loop() {
 void App::render_mandie() {
     // TODO - really want to do this on a separate thread so the GUI doesn't freeze
     // whilst it's happening
-    mandelbrot_renderer->render_to_buffer(mandelbrot);
-    png_saver.save_png(*mandelbrot_renderer);
-    sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
+
+    auto render_lambda = [this] {
+        mandelbrot_renderer->render_to_buffer(mandelbrot);
+        png_saver.save_png(*mandelbrot_renderer);
+        sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
+    };
+
+    std::thread render_thread(render_lambda);
+    render_thread.join();
 }
