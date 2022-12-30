@@ -29,8 +29,6 @@ public:
 
     ~MandelbrotRenderer()
     {
-        cout << "~MandelbrotRenderer()" << endl;
-
         delete buffer;
     }
 

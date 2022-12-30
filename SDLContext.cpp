@@ -49,6 +49,9 @@ void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
     int texture_pitch;
     void *texture_pixels;
 
+    // TODO this is going to blow up if mandie has been deleted since we started rendering!
+    // Note that this will happen if we resize the window!
+
     // TODO use RAII to make this a bit less hairy...
 
     if (SDL_LockTexture(mandelbrot_texture->texture, nullptr, &texture_pixels, &texture_pitch) != 0) {

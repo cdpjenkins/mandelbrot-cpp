@@ -75,6 +75,7 @@ void App::main_loop() {
                     break;
             }
 
+            // Grrr can't handle this in the swtich statement because the event_id is not constant.
             if (e.type == sdl.redraw_event_id) {
                 // may have multiple types but not yet so screw it...
 
@@ -104,7 +105,6 @@ void App::render_mandie() {
     auto render_lambda = [this] {
         mandelbrot_renderer->render_to_buffer(mandelbrot);
         png_saver.save_png(*mandelbrot_renderer);
-//        sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
 
         sdl.send_redraw_event(*mandelbrot_renderer);
     };

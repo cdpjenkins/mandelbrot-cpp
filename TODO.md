@@ -1,4 +1,4 @@
 # TODOs
 - Don't render mandie on the UI thread!
-  - Have made a start...
-  - Gonna need to send a custom SDL event to cause it to get copied to screen
+  - Blows up if MandelbrotRenderer gets deleted whilst rendering and before we try to copy to the screen!
+  - Refactor the SDL custom event code so it _doesn't_ suck.

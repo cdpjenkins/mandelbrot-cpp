@@ -17,6 +17,8 @@ using namespace std;
 class SDLTextureWrapper {
 public:
     SDLTextureWrapper(SDL_Window *window, SDL_Renderer *renderer, int width, int height) :
+        width(width),
+        height(height),
         texture(SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height))
     {
         if (texture == nullptr) {
@@ -31,6 +33,8 @@ public:
     }
 
     SDL_Texture *texture;
+    int width;
+    int height;
 };
 
 class SDLContext {
