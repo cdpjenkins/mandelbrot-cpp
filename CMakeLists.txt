@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.18)
 project(mandelbrot)
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 set (CMAKE_CXX_STANDARD 20)
