@@ -55,6 +55,7 @@ public:
 private:
     Config config;
     Complex screen_to_complex(int x, int y) const;
+    double aspect_ratio = (double)screen_height / screen_width;
 };
 
 #endif // _MANDELBROTRENDERER_HPP

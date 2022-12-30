@@ -74,11 +74,10 @@ Complex MandelbrotRenderer::screen_to_complex(const int x, const int y) const {
     double x_progress = (double)x / screen_width;
     double y_progress = (double)y / screen_height;
 
-    Complex top_left{centre.re - zoom_size, centre.im - zoom_size};
-    Complex bottom_right{centre.re + zoom_size, centre.im + zoom_size};
+    Complex top_left{centre.re - zoom_size, centre.im - zoom_size*aspect_ratio};
 
     double complex_width = zoom_size * 2;
-    double complex_height = zoom_size * 2;
+    double complex_height = zoom_size * 2 * aspect_ratio;
 
     double re = top_left.re + complex_width * x_progress;
     double im = top_left.im + complex_height * y_progress;

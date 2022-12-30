@@ -15,7 +15,7 @@ public:
     bool auto_zoom = false;
     Complex zoom_to = Complex(0, 0);
     Complex initial_coords = Complex(0, 0);
-    double initial_zoom;
+    double initial_zoom = 4.0;
 
     static Config parse(int argc, char** argv);
 
