@@ -19,7 +19,12 @@ public:
         config(config),
         sdl(SDLContext()),
         mandelbrot(config.iteration_depth),
-        mandelbrot_renderer(make_unique<MandelbrotRenderer>(width, height, config)),
+        mandelbrot_renderer(make_unique<MandelbrotRenderer>(
+                width,
+                height,
+                config,
+                config.initial_coords,
+                config.initial_zoom)),
         png_saver(PngSaver(config.png_base))
     {
         // constructor body left intentionally blank

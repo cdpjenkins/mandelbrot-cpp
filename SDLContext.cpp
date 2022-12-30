@@ -54,11 +54,6 @@ void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
         SDL_Log("Unable to lock texture: %s", SDL_GetError());
     }
     else {
-
-        cout << "texture_pitch: " << texture_pitch << endl;
-        cout << "mandie.screen_width: " << mandie.screen_width << endl;   
-        cout << "mandie.screen_height: " << mandie.screen_height << endl;   
-
         memcpy(texture_pixels, mandie.buffer, texture_pitch * mandie.screen_height);
     }
 

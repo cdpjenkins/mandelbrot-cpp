@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "Config.hpp"
+#include "Complex.hpp"
 
 Config Config::parse(int argc, char** argv) {
     Config config;
@@ -21,16 +22,18 @@ Config Config::parse(int argc, char** argv) {
             config.png_base = argv[++i];
         } else if (arg_key == "--auto-zoom-to") {
             config.auto_zoom = true;
-
-            // TODO move this "lovely" parsing code maybe into Complex class
-            istringstream coords_stringstream(argv[++i]);
-            string re_string;
-            string im_string;
-            getline(coords_stringstream, re_string, ',');
-            getline(coords_stringstream, im_string, ',');
-            config.zoom_to = Complex(stod(re_string), stod(im_string));
+            const auto *arg = argv[++i];
+            Complex complex = Complex::parse(arg);
+            config.zoom_to = complex;
+        } else if (arg_key == "--initial-coords") {
+            const auto arg = argv[++i];
+            Complex complex = Complex::parse(arg);
+            config.initial_coords = complex;
+        } else if (arg_key == "--initial-zoom") {
+            config.initial_zoom = stod(argv[++i]);
         }
     }
 
     return config;
 }
+

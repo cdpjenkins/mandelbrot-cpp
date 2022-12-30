@@ -1,6 +1,8 @@
 #ifndef _COMPLEX_HPP
 #define _COMPLEX_HPP
 
+#include <sstream>
+#include <iostream>
 #include "math.h"
 
 // TODO - turns out there is a complex class in the std library that we could just use...
@@ -39,7 +41,8 @@ public:
     static inline Complex ZERO() {
         return Complex(0, 0);
     }
-};
 
+    static Complex parse(const char *arg);
+};
 
 #endif // _COMPLEX_HPP

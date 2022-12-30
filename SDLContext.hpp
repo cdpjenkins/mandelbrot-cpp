@@ -19,9 +19,6 @@ public:
     SDLTextureWrapper(SDL_Window *window, SDL_Renderer *renderer, int width, int height) :
         texture(SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height))
     {
-        cout << window << endl;
-        cout << "in constructor, renderer: " << renderer << endl;
-        cout << "just made thar texture: " << texture << endl;
         if (texture == nullptr) {
             cout << "SDL_CreateTexture " << " " << SDL_GetError() <<  endl;
         }

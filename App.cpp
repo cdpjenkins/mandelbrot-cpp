@@ -1,5 +1,7 @@
 #include "App.hpp"
 
+#include <memory>
+
 void App::main_loop() {
     int rc;
 
@@ -63,7 +65,7 @@ void App::main_loop() {
                             width = e.window.data1;
                             height = e.window.data2;
                             cout << "resized: " << e.window.windowID << " " << width << ", " << height << endl;
-                            sdl.resize(width, width);
+                            sdl.resize(width, height);
                             mandelbrot_renderer.reset(
                                 new MandelbrotRenderer(width, height, config, mandelbrot_renderer->centre, mandelbrot_renderer->zoom_size));
                             render_mandie();
