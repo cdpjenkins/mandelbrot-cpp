@@ -8,16 +8,13 @@ using namespace std;
 #include "Config.hpp"
 #include "SDLContext.hpp"
 
-const int INITIAL_WIDTH = 1280;
-const int INITIAL_HEIGHT = 800;
-
 class App {
 public:
     App(Config & config) :
-        width(INITIAL_WIDTH),
-        height(INITIAL_HEIGHT),
+        width(config.initial_width),
+        height(config.initial_height),
         config(config),
-        sdl(SDLContext()),
+        sdl(config.initial_width, config.initial_height),
         mandelbrot(config.iteration_depth),
         mandelbrot_renderer(make_unique<MandelbrotRenderer>(
                 width,

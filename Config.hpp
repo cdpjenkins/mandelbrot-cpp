@@ -19,6 +19,8 @@ public:
 
     static Config parse(int argc, char** argv);
 
+    int initial_width = 1280;
+    int initial_height = 800;
 };
 
 #endif // _CONFIG_HPP

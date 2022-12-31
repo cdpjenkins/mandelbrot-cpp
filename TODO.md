@@ -3,7 +3,6 @@
 ## Now
 
 ## Backlog
-- Command line params for size of window
 - Refactoring
   - Go through and let CLion tell me what to fix!
   - Pull SDL stuff into the App class and call it SDLApp

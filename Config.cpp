@@ -31,6 +31,10 @@ Config Config::parse(int argc, char** argv) {
             config.initial_coords = complex;
         } else if (arg_key == "--initial-zoom") {
             config.initial_zoom = stod(argv[++i]);
+        } else if (arg_key == "--width") {
+            config.initial_width = stoi(argv[++i]);
+        } else if (arg_key == "--height") {
+            config.initial_height = stoi(argv[++i]);
         }
     }
 

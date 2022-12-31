@@ -39,7 +39,7 @@ public:
 
 class SDLContext {
 public:
-    SDLContext();
+    SDLContext(int initial_width, int initial_height);
     ~SDLContext();
 
     void main_loop();
