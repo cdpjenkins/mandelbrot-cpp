@@ -1,4 +1,7 @@
 # TODOs
+
+## Now
+
+## Later
 - Don't render mandie on the UI thread!
-  - Blows up if MandelbrotRenderer gets deleted whilst rendering and before we try to copy to the screen!
-  - Refactor the SDL custom event code so it _doesn't_ suck.
+  - Basically I don't know how to effectively do concurrency in modern C++ yet

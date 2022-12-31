@@ -22,6 +22,7 @@ add_executable(mandelbrot
         Mandelbrot.cpp
         MandelbrotRenderer.cpp
         PngSaver.cpp
+        RenderedMandelbrot.cpp
         SDLContext.cpp)
 
 target_link_libraries(mandelbrot ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})

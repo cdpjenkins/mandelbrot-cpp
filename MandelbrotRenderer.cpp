@@ -58,12 +58,7 @@ void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
 
             int n = mandelbrot.compute(k);
 
-            // TODO iteration depth is basically hardcoded here (100)
-            double brightness = n != -1
-                    ? (double)n / mandelbrot.iteration_depth * 0xFF
-                    : 0xFF;
-
-            buffer[y * screen_width + x] = iterations_to_rgb(n);
+            rendered_mandelbrot.set_pixel(x, y, iterations_to_rgb(n));
         }
     }
 

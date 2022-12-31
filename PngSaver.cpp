@@ -11,13 +11,13 @@ using namespace std;
 #include "PngSaver.hpp"
 #include "MandelbrotRenderer.hpp"
 
-void PngSaver::save_png(MandelbrotRenderer &mandie) {
+void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
     SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom(
-        (void*)mandie.buffer,
-        mandie.screen_width,
-        mandie.screen_height,
+        (void*) rendered_mandelbrot.get_buffer(),
+        rendered_mandelbrot.width,
+        rendered_mandelbrot.height,
         SDL_BITSPERPIXEL(SDL_PIXELFORMAT_RGBA32),
-        mandie.screen_width * SDL_BYTESPERPIXEL(SDL_PIXELFORMAT_RGBA32),
+        rendered_mandelbrot.width * SDL_BYTESPERPIXEL(SDL_PIXELFORMAT_RGBA32),
         SDL_PIXELFORMAT_RGBA32
     );
 

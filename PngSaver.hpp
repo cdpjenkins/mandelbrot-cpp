@@ -7,7 +7,7 @@ class PngSaver {
 public:
     PngSaver(string & png_base) :
         png_base(png_base) {} 
-    void save_png(MandelbrotRenderer &mandie);
+    void save_png(RenderedMandelbrot &rendered_mandelbrot);
 
 private:
     int png_counter {0};

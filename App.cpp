@@ -99,16 +99,17 @@ void App::main_loop() {
 }
 
 void App::render_mandie() {
-    // TODO - really want to do this on a separate thread so the GUI doesn't freeze
-    // whilst it's happening
-
     auto render_lambda = [this] {
         mandelbrot_renderer->render_to_buffer(mandelbrot);
-        png_saver.save_png(*mandelbrot_renderer);
+        png_saver.save_png(mandelbrot_renderer->rendered_mandelbrot);
 
         sdl.send_redraw_event(*mandelbrot_renderer);
     };
 
     std::thread render_thread(render_lambda);
-    render_thread.detach();
+
+    // meh threads are overrated
+    // (also: I haven't figured out how to make threading and object ownership lifecycle shizzle play
+    // nicely together)
+    render_thread.join();
 }
