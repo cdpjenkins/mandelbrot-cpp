@@ -3,6 +3,8 @@
 using namespace std;
 
 #include <SDL.h>
+#include <thread>
+#include <vector>
 
 #include "MandelbrotRenderer.hpp"
 
@@ -48,19 +50,35 @@ Colour iterations_to_rgb(int iterations) {
 }
 
 void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
-
     Uint32 start_time = SDL_GetTicks();
 
-    for (int y = 0; y < screen_height; y++) {
-        for (int x = 0; x < screen_width; x++) {
-            // TODO this is probably very inefficient with all the divides and multiplies
-            Complex k = screen_to_complex(x, y);
+    vector<thread> render_threads;
 
-            int n = mandelbrot.compute(k);
+    const auto processor_count = std::thread::hardware_concurrency();
+    cout << "num cpu cores: " << processor_count << endl;
 
-            rendered_mandelbrot.set_pixel(x, y, iterations_to_rgb(n));
-        }
+    int num_threads = 10;
+    int slice_size = screen_height / num_threads;
+
+    for (auto y_slice = 0; y_slice < screen_height; y_slice += slice_size) {
+
+        auto render_lambda = [y_slice , this, &mandelbrot, slice_size] {
+            for (auto y = y_slice; y < y_slice + slice_size && y < screen_height; y++) {
+                for (auto x = 0; x < screen_width; x++) {
+                    // this is probably very inefficient with all the divides and multiplies
+                    Complex k = screen_to_complex(x, y);
+
+                    int n = mandelbrot.compute(k);
+
+                    rendered_mandelbrot.set_pixel(x, y, iterations_to_rgb(n));
+                }
+            }
+        };
+
+        render_threads.emplace_back(render_lambda);
     }
+
+    std::for_each(render_threads.begin(), render_threads.end(), [](thread& t){ t.join(); } );
 
     cout << SDL_GetTicks() - start_time << "ms" <<endl;
 }

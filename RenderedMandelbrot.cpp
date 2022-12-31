@@ -8,10 +8,5 @@ RenderedMandelbrot::RenderedMandelbrot(int width, int height) :
         width(width),
         height(height)
 {
-    buffer = new Colour[width * height];
+    buffer.reserve(width*height);
 }
-
-RenderedMandelbrot::~RenderedMandelbrot() {
-    delete buffer;
-}
-

@@ -5,6 +5,8 @@
 #ifndef MANDELBROT_RENDEREDMANDELBROT_HPP
 #define MANDELBROT_RENDEREDMANDELBROT_HPP
 
+#include <vector>
+
 #include "Colour.hpp"
 
 class RenderedMandelbrot {
@@ -12,21 +14,19 @@ class RenderedMandelbrot {
 public:
     RenderedMandelbrot(int width, int height);
 
-    virtual ~RenderedMandelbrot();
-
     void set_pixel(int x, int y, Colour && colour) {
         buffer[y * width + x] = colour;
     }
 
     Colour * get_buffer() {
-        return buffer;
+        return buffer.data();
     }
 
     int width;
     int height;
 
 private:
-    Colour *buffer;
+    std::vector<Colour> buffer;
 };
 
 #endif //MANDELBROT_RENDEREDMANDELBROT_HPP

@@ -102,7 +102,6 @@ void App::render_mandie() {
     auto render_lambda = [this] {
         mandelbrot_renderer->render_to_buffer(mandelbrot);
         png_saver.save_png(mandelbrot_renderer->rendered_mandelbrot);
-
         sdl.send_redraw_event(*mandelbrot_renderer);
     };
 
