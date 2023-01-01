@@ -10,6 +10,18 @@ using namespace std;
 
 const int colour_cycle_period = 256;
 
+MandelbrotRenderer::MandelbrotRenderer(int screen_width, int screen_height, Config &config, Complex centre,
+                                       double zoom_size) :
+        screen_width(screen_width),
+        screen_height(screen_height),
+        config(config),
+        centre(centre),
+        zoom_size(zoom_size),
+        rendered_mandelbrot(screen_width, screen_height),
+        num_threads(get_num_threads(config.max_threads))
+{}
+
+
 Colour iterations_to_rgb(int iterations) {
     // This is kind of like doing HSV to RGB conversation, except:
     // thankfully we don't have to do *full* HSV->RGB conversation because
@@ -54,10 +66,6 @@ void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
 
     vector<thread> render_threads;
 
-    const auto processor_count = std::thread::hardware_concurrency();
-    cout << "num cpu cores: " << processor_count << endl;
-
-    int num_threads = max((const unsigned int)10, processor_count);
     int slice_size = screen_height / num_threads;
 
     for (auto y_slice = 0; y_slice < screen_height; y_slice += slice_size) {
@@ -81,6 +89,15 @@ void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
     std::for_each(render_threads.begin(), render_threads.end(), [](thread& t){ t.join(); } );
 
     cout << "rendering took " << SDL_GetTicks() - start_time << "ms" <<endl;
+}
+
+int MandelbrotRenderer::get_num_threads(int max_threads) {
+    const auto processor_count = thread::hardware_concurrency();
+    int num_threads = min((const unsigned int) max_threads, processor_count);
+
+    cout << "Using " << num_threads << " rendering threads" << endl;
+
+    return num_threads;
 }
 
 Complex MandelbrotRenderer::screen_to_complex(const int x, const int y) const {

@@ -28,7 +28,6 @@ void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
     ostringstream png_name;
     png_name << png_base << png_counter++ << ".png";
 
-    cout << "saving " << png_name.str() << endl;
     int rc = IMG_SavePNG(surface, png_name.str().c_str());
     if (rc != 0) {
         throw runtime_error("Failed to save PNG: "s + SDL_GetError());

@@ -35,6 +35,8 @@ Config Config::parse(int argc, char** argv) {
             config.initial_width = stoi(argv[++i]);
         } else if (arg_key == "--height") {
             config.initial_height = stoi(argv[++i]);
+        } else if (arg_key == "--max-threads") {
+            config.max_threads = stoi(argv[++i]);
         }
     }
 

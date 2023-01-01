@@ -21,6 +21,7 @@ public:
 
     int initial_width = 1280;
     int initial_height = 800;
+    int max_threads;
 };
 
 #endif // _CONFIG_HPP
