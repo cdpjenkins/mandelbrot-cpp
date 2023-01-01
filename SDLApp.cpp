@@ -1,9 +1,16 @@
-#include "App.hpp"
+#include "SDLApp.hpp"
 
 #include <memory>
 #include <thread>
 
-App::App(Config &config) :
+int main(int argc, char** argv) {
+    Config config = Config::parse(argc, argv);
+
+    SDLApp app(config);
+    app.main_loop();
+}
+
+SDLApp::SDLApp(Config &config) :
         width(config.initial_width),
         height(config.initial_height),
         config(config),
@@ -20,12 +27,10 @@ App::App(Config &config) :
     // constructor body left intentionally blank
 }
 
-void App::main_loop() {
+void SDLApp::main_loop() {
     render_mandie();
 
     bool quit = false;
-    // This is the main event loop. it's kind of annoying to have SDL stuff in here. Maybe
-    // turn this into an elaborate system of callbacks at some point.
     while (!quit) {
         SDL_Event e;
         while (SDL_PollEvent(&e)) {
@@ -88,12 +93,6 @@ void App::main_loop() {
 
             // Grrr can't handle this in the switch statement because the event_id is not constant.
             if (e.type == sdl.redraw_event_id) {
-                // may have multiple types but not yet so screw it...
-
-                // alright so how do we make sure that the mandie renderer definitely has not been
-                // deleted prior to us hitting this code...
-                // hey I guess there will always be *a* renderer... just maybe not the one that generated this
-                // event.../
                 sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
             }
         }
@@ -109,7 +108,7 @@ void App::main_loop() {
     }
 }
 
-void App::render_mandie() {
+void SDLApp::render_mandie() {
     auto render_lambda = [this] {
         mandelbrot_renderer->render_to_buffer(mandelbrot);
         png_saver.save_png(mandelbrot_renderer->rendered_mandelbrot);

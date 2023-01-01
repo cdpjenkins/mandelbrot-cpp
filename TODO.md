@@ -3,9 +3,7 @@
 ## Now
 
 ## Backlog
-- Refactoring
-  - Pull SDL stuff into the App class and call it SDLApp
-  - Probably still need an SDLContext though, but give it a more focussed set of responsibilities
+- Headless mode?
 - Headless mode?
 - Use futures rather than using threads directly
 - Nicer colours

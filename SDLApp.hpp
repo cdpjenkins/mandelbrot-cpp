@@ -1,5 +1,5 @@
-#ifndef MANDELBROT_APP_HPP
-#define MANDELBROT_APP_HPP
+#ifndef MANDELBROT_SDLAPP_HPP
+#define MANDELBROT_SDLAPP_HPP
 
 #include <memory>
 
@@ -8,9 +8,9 @@ using namespace std;
 #include "Config.hpp"
 #include "SDLContext.hpp"
 
-class App {
+class SDLApp {
 public:
-    explicit App(Config & config);
+    explicit SDLApp(Config & config);
 
     void main_loop();
 
@@ -27,4 +27,4 @@ private:
     void render_mandie();
 };
 
-#endif // MANDELBROT_APP_HPP
+#endif // MANDELBROT_SDLAPP_HPP
