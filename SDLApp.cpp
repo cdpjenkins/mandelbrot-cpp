@@ -1,7 +1,6 @@
 #include "SDLApp.hpp"
 
 #include <memory>
-#include <thread>
 
 int main(int argc, char** argv) {
     Config config = Config::parse(argc, argv);
@@ -113,16 +112,7 @@ void SDLApp::main_loop() {
 }
 
 void SDLApp::render_mandie() {
-    auto render_lambda = [this] {
-        mandelbrot_renderer->render_to_buffer(mandelbrot);
-        png_saver.save_png(mandelbrot_renderer->rendered_mandelbrot);
-        sdl.send_redraw_event(*mandelbrot_renderer);
-    };
-
-    std::thread render_thread(render_lambda);
-
-    // Meh, threads are overrated
-    // (also: I haven't figured out how to make threading and object ownership lifecycle shizzle play
-    // nicely together)
-    render_thread.join();
+    mandelbrot_renderer->render_to_buffer(mandelbrot);
+    png_saver.save_png(mandelbrot_renderer->rendered_mandelbrot);
+    sdl.send_redraw_event(*mandelbrot_renderer);
 }

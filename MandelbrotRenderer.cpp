@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include <thread>
 #include <vector>
+#include <future>
 using namespace std;
 
 #include <SDL.h>
@@ -59,12 +59,11 @@ Colour iterations_to_rgb(int iterations) {
 void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
     Uint32 start_time = SDL_GetTicks();
 
-    vector<thread> render_threads;
+    vector<future<void>> render_threads;
 
     int slice_size = screen_height / num_threads;
 
     for (auto y_slice = 0; y_slice < screen_height; y_slice += slice_size) {
-
         auto render_lambda = [y_slice , this, &mandelbrot, slice_size] {
             for (auto y = y_slice; y < y_slice + slice_size && y < screen_height; y++) {
                 for (auto x = 0; x < screen_width; x++) {
@@ -78,10 +77,12 @@ void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
             }
         };
 
-        render_threads.emplace_back(render_lambda);
+        render_threads.push_back(std::async(std::launch::async, render_lambda));
     }
 
-    std::for_each(render_threads.begin(), render_threads.end(), [](thread& t){ t.join(); } );
+    std::for_each(render_threads.begin(),
+                  render_threads.end(),
+                  [](auto & render_future){ render_future.wait(); });
 
     cout << "rendering took " << SDL_GetTicks() - start_time << "ms" <<endl;
 }
