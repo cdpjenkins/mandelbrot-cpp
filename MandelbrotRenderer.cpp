@@ -127,3 +127,7 @@ void MandelbrotRenderer::zoom_out_to(const int x, const int y) {
     zoom_size /= config.zoom_factor;
     cout << x << ", " << y << endl;
 }
+
+void MandelbrotRenderer::scroll(int dx, int dy) {
+    centre = centre + Complex(dx * 8 * zoom_size / screen_width, -dy * 8 * zoom_size / screen_height);
+}

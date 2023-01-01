@@ -89,6 +89,10 @@ void SDLApp::main_loop() {
                             break;
                     }
                     break;
+                case SDL_MOUSEWHEEL:
+                    mandelbrot_renderer->scroll(e.wheel.x, e.wheel.y);
+                    render_mandie();
+                    break;
             }
 
             // Grrr can't handle this in the switch statement because the event_id is not constant.

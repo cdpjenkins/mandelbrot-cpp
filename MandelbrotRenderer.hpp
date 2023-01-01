@@ -24,6 +24,8 @@ public:
     void zoom_in_to(Complex & coords);
     void zoom_out_to(int x, int y);
 
+    void scroll(int dx, int dy);
+
     int screen_width;
     int screen_height;
 
