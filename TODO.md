@@ -4,7 +4,6 @@
 
 ## Backlog
 - Headless mode?
-- Use futures rather than using threads directly
 - Nicer colours
   - Cubic interpolation over some pre-chosen nice colours?
 - Render Mandie on the graphics card!
