@@ -1,10 +1,12 @@
-#ifndef _COLOUR_HPP
-#define _COLOUR_HPP
+#ifndef MANDELBROT_COLOUR_HPP
+#define MANDELBROT_COLOUR_HPP
 
-#include <stdint.h>
+#include <cstdint>
+using namespace std;
 
 class Colour {
 public:
+    [[maybe_unused]]
     uint8_t r, g, b, a;
 
     inline Colour() : Colour(0, 0, 0, 0xFF) {}
@@ -16,4 +18,4 @@ public:
             a {a} {}
 };
 
-#endif // _COLOUR_HPP
+#endif // MANDELBROT_COLOUR_HPP

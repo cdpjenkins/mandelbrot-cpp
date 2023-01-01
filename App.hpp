@@ -1,5 +1,5 @@
-#ifndef _APP_HPP
-#define _APP_HPP
+#ifndef MANDELBROT_APP_HPP
+#define MANDELBROT_APP_HPP
 
 #include <memory>
 
@@ -10,22 +10,7 @@ using namespace std;
 
 class App {
 public:
-    App(Config & config) :
-        width(config.initial_width),
-        height(config.initial_height),
-        config(config),
-        sdl(config.initial_width, config.initial_height),
-        mandelbrot(config.iteration_depth),
-        mandelbrot_renderer(make_unique<MandelbrotRenderer>(
-                width,
-                height,
-                config,
-                config.initial_coords,
-                config.initial_zoom)),
-        png_saver(PngSaver(config.png_base))
-    {
-        // constructor body left intentionally blank
-    }
+    explicit App(Config & config);
 
     void main_loop();
 
@@ -42,4 +27,4 @@ private:
     void render_mandie();
 };
 
-#endif // _APP_HPP
+#endif // MANDELBROT_APP_HPP

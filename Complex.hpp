@@ -1,9 +1,10 @@
-#ifndef _COMPLEX_HPP
-#define _COMPLEX_HPP
+#ifndef MANDELBROT_COMPLEX_HPP
+#define MANDELBROT_COMPLEX_HPP
 
 #include <sstream>
 #include <iostream>
-#include "math.h"
+#include <cmath>
+using namespace std;
 
 // TODO - turns out there is a complex class in the std library that we could just use...
 class Complex {
@@ -15,11 +16,12 @@ public:
         this->im = im;
     }
 
+    [[maybe_unused]] [[nodiscard]]
     inline Complex squared() const {
         double new_re = re*re - im*im;
         double new_im = re * im * 2;
 
-        return Complex(new_re, new_im);
+        return Complex{new_re, new_im};
     }
 
     inline void square_and_add(const Complex& k) {
@@ -31,18 +33,19 @@ public:
     }
 
     inline Complex operator+(const Complex& that) const {
-        return Complex(this->re + that.re, this->im + that.im);
+        return Complex{this->re + that.re, this->im + that.im};
     }
 
+    [[nodiscard]]
     inline double norm() const {
         return re*re + im*im;
     }
 
     static inline Complex ZERO() {
-        return Complex(0, 0);
+        return Complex{0, 0};
     }
 
     static Complex parse(const char *arg);
 };
 
-#endif // _COMPLEX_HPP
+#endif // MANDELBROT_COMPLEX_HPP

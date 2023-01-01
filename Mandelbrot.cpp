@@ -1,5 +1,3 @@
-#include <math.h>
-
 #include "Mandelbrot.hpp"
 
 int Mandelbrot::compute(const Complex& k) const {

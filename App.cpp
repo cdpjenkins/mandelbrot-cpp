@@ -3,6 +3,23 @@
 #include <memory>
 #include <thread>
 
+App::App(Config &config) :
+        width(config.initial_width),
+        height(config.initial_height),
+        config(config),
+        sdl(config.initial_width, config.initial_height),
+        mandelbrot(config.iteration_depth),
+        mandelbrot_renderer(make_unique<MandelbrotRenderer>(
+                width,
+                height,
+                config,
+                config.initial_coords,
+                config.initial_zoom)),
+        png_saver(PngSaver(config.png_base))
+{
+    // constructor body left intentionally blank
+}
+
 void App::main_loop() {
     render_mandie();
 

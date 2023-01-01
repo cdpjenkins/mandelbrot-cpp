@@ -1,5 +1,5 @@
-#ifndef _CONFIG_HPP
-#define _CONFIG_HPP
+#ifndef MANDELBROT_CONFIG_HPP
+#define MANDELBROT_CONFIG_HPP
 
 #include <string>
 using namespace std;
@@ -24,4 +24,4 @@ public:
     int max_threads;
 };
 
-#endif // _CONFIG_HPP
+#endif // MANDELBROT_CONFIG_HPP

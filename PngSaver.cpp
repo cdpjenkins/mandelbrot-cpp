@@ -1,12 +1,8 @@
 #include <iostream>
-#include <sstream>
 using namespace std;
 
 #include <SDL.h>
 #include <SDL_image.h>
-
-// #include <stdio>
-// using namespace std;
 
 #include "PngSaver.hpp"
 #include "MandelbrotRenderer.hpp"

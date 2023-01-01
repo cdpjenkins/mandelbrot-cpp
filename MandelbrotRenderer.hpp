@@ -1,5 +1,5 @@
-#ifndef _MANDELBROTRENDERER_HPP
-#define _MANDELBROTRENDERER_HPP
+#ifndef MANDELBROT_MANDELBROTRENDERER_HPP
+#define MANDELBROT_MANDELBROTRENDERER_HPP
 
 #include <iostream>
 using namespace std;
@@ -21,7 +21,7 @@ public:
 
     void render_to_buffer(Mandelbrot & mandelbrot);
     void zoom_in_to(int x, int y);
-    void zoom_in_to(Complex & centre);
+    void zoom_in_to(Complex & coords);
     void zoom_out_to(int x, int y);
 
     int screen_width;
@@ -40,9 +40,9 @@ private:
 
     double aspect_ratio = (double)screen_height / screen_width;
 
-    int num_threads;
+    const int num_threads;
 
     static int get_num_threads(int max_threads = 10);
 };
 
-#endif // _MANDELBROTRENDERER_HPP
+#endif // MANDELBROT_MANDELBROTRENDERER_HPP

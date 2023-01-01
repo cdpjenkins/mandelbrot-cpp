@@ -1,7 +1,3 @@
-//
-// Created by Chris Jenkins on 31/12/2022.
-//
-
 #ifndef MANDELBROT_RENDEREDMANDELBROT_HPP
 #define MANDELBROT_RENDEREDMANDELBROT_HPP
 

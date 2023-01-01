@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 
 #include "Config.hpp"
 #include "Complex.hpp"
@@ -9,8 +8,6 @@ Config Config::parse(int argc, char** argv) {
 
     for (int i = 0; i < argc; i++) {
         string arg_key {argv[i]};
-
-        cout << arg_key << endl;
 
         if (arg_key == "--iteration-depth") {
             config.iteration_depth = stoi(argv[++i]);
