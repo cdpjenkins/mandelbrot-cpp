@@ -60,8 +60,6 @@ void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
 
     SDL_UnlockTexture(mandelbrot_texture->texture);
 
-    cout << "about to copy thar texture. renderer: " << renderer << endl;
-
     SDL_Rect src_rect = { 0, 0, mandie.screen_width, mandie.screen_height };
     SDL_Rect dest_rect = { 0, 0, mandie.screen_width, mandie.screen_height };
 
@@ -70,10 +68,6 @@ void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
         throw runtime_error("SDL_RenderCopy failed with "s + SDL_GetError());
     }
     SDL_RenderPresent(renderer);
-}
-
-void SDLContext::main_loop() {
-    cout << "lalalala do not call me" <<endl;
 }
 
 void SDLContext::resize(int width, int height) {

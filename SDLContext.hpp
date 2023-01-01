@@ -42,7 +42,6 @@ public:
     SDLContext(int initial_width, int initial_height);
     ~SDLContext();
 
-    void main_loop();
     void copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie);
     void resize(int width, int height);
     void send_redraw_event(MandelbrotRenderer& renderer);

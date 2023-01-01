@@ -4,14 +4,10 @@
 #include <thread>
 
 void App::main_loop() {
-    int rc;
-
-    Uint32 start_time;
-
     render_mandie();
 
     bool quit = false;
-    // This is the main event loop. it's kind of annoying to have to have SDL stuff in here. Maybe
+    // This is the main event loop. it's kind of annoying to have SDL stuff in here. Maybe
     // turn this into an elaborate system of callbacks at some point.
     while (!quit) {
         SDL_Event e;
@@ -49,8 +45,6 @@ void App::main_loop() {
                     }
                     break;
                 case SDL_MOUSEBUTTONUP:
-                    cout << "button: " << (int)e.button.button << endl;
-
                     if (e.button.button == SDL_BUTTON_LEFT) {
                         mandelbrot_renderer->zoom_in_to(e.button.x, e.button.y);
                     } else {
@@ -67,19 +61,19 @@ void App::main_loop() {
                             height = e.window.data2;
                             cout << "resized: " << e.window.windowID << " " << width << ", " << height << endl;
                             sdl.resize(width, height);
-                            mandelbrot_renderer.reset(
-                                new MandelbrotRenderer(width, height, config, mandelbrot_renderer->centre, mandelbrot_renderer->zoom_size));
+                            mandelbrot_renderer = std::make_unique<MandelbrotRenderer>(
+                                width, height, config, mandelbrot_renderer->centre, mandelbrot_renderer->zoom_size);
                             render_mandie();
                             break;
                     }
                     break;
             }
 
-            // Grrr can't handle this in the swtich statement because the event_id is not constant.
+            // Grrr can't handle this in the switch statement because the event_id is not constant.
             if (e.type == sdl.redraw_event_id) {
                 // may have multiple types but not yet so screw it...
 
-                // alright so how do we make sure that the mandie renderer definitely definitely has not been
+                // alright so how do we make sure that the mandie renderer definitely has not been
                 // deleted prior to us hitting this code...
                 // hey I guess there will always be *a* renderer... just maybe not the one that generated this
                 // event.../
@@ -107,7 +101,7 @@ void App::render_mandie() {
 
     std::thread render_thread(render_lambda);
 
-    // meh threads are overrated
+    // Meh, threads are overrated
     // (also: I haven't figured out how to make threading and object ownership lifecycle shizzle play
     // nicely together)
     render_thread.join();
