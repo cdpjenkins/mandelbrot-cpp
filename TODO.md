@@ -3,9 +3,6 @@
 ## Now
 
 ## Backlog
-- Headless mode?
-- Nicer colours
-  - Cubic interpolation over some pre-chosen nice colours?
 - Render Mandie on the graphics card!
 
 ## Icebox
