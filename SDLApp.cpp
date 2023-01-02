@@ -96,7 +96,7 @@ void SDLApp::main_loop() {
 
             // Grrr can't handle this in the switch statement because the event_id is not constant.
             if (e.type == sdl.redraw_event_id) {
-                sdl.copy_rendered_mandie_to_screen(*mandelbrot_renderer);
+                sdl.copy_rendered_mandie_to_screen(mandelbrot_renderer->rendered_mandelbrot);
             }
         }
 

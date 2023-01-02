@@ -8,7 +8,7 @@
 #include <SDL_image.h>
 
 #include "Config.hpp"
-#include "MandelbrotRenderer.hpp"
+#include "RenderedMandelbrot.hpp"
 #include "PngSaver.hpp"
 
 
@@ -41,7 +41,7 @@ public:
     SDLContext(int initial_width, int initial_height);
     ~SDLContext();
 
-    void copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie);
+    void copy_rendered_mandie_to_screen(RenderedMandelbrot & mandie);
     void resize(int width, int height);
     void send_redraw_event(MandelbrotRenderer& mandelbrot_renderer) const;
 

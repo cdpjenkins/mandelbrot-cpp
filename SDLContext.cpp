@@ -33,19 +33,19 @@ SDLContext::~SDLContext() {
     SDL_Quit();
 }
 
-void SDLContext::copy_rendered_mandie_to_screen(MandelbrotRenderer & mandie) {
+void SDLContext::copy_rendered_mandie_to_screen(RenderedMandelbrot & rendered_mandelbrot) {
     int texture_pitch;
     void *texture_pixels;
     if (SDL_LockTexture(mandelbrot_texture->texture, nullptr, &texture_pixels, &texture_pitch) != 0) {
         SDL_Log("Unable to lock texture: %s", SDL_GetError());
     }
     else {
-        memcpy(texture_pixels, mandie.rendered_mandelbrot.get_buffer(), texture_pitch * mandie.screen_height);
+        memcpy(texture_pixels, rendered_mandelbrot.get_buffer(), texture_pitch * rendered_mandelbrot.height);
     }
     SDL_UnlockTexture(mandelbrot_texture->texture);
 
-    SDL_Rect src_rect = { 0, 0, mandie.screen_width, mandie.screen_height };
-    SDL_Rect dest_rect = { 0, 0, mandie.screen_width, mandie.screen_height };
+    SDL_Rect src_rect = { 0, 0, rendered_mandelbrot.width, rendered_mandelbrot.height };
+    SDL_Rect dest_rect = { 0, 0, rendered_mandelbrot.width, rendered_mandelbrot.height };
 
     int rc = SDL_RenderCopy(renderer, mandelbrot_texture->texture, &src_rect, &dest_rect);
     if (rc != 0) {
