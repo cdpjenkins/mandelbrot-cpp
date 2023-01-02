@@ -8,7 +8,7 @@ using namespace std;
 
 class Config {
 public:
-    int iteration_depth = 400;
+    int iteration_depth = 800;
     double zoom_factor = 0.7;
     double max_zoom = 0.000000000000000000001;
     string png_base = "pngs/mandie_"s;

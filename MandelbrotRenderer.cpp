@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <vector>
 #include <future>
+#include <cmath>
 using namespace std;
 
 #include <SDL.h>
@@ -56,6 +57,20 @@ Colour iterations_to_rgb(int iterations) {
     }
 }
 
+Colour iterations_to_rgb_using_trig(int iterations) {
+    if (iterations == -1) {
+        return Colour{0, 0, 0, 0xFF};
+    }
+
+    double theta = 2 * M_PI * iterations / colour_cycle_period;
+
+    uint8_t r = uint8_t(sin(theta) * 128 + 127);
+    uint8_t g = uint8_t(sin(theta - M_PI_4) * 128 + 127);
+    uint8_t b = uint8_t(sin(theta - M_PI_2) * 128 + 127);
+
+    return Colour{r, g, b, 0xFF};
+}
+
 void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
     Uint32 start_time = SDL_GetTicks();
 
@@ -72,7 +87,7 @@ void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
 
                     int n = mandelbrot.compute(k);
 
-                    rendered_mandelbrot.set_pixel(x, y, iterations_to_rgb(n));
+                    rendered_mandelbrot.set_pixel(x, y, iterations_to_rgb_using_trig(n));
                 }
             }
         };
