@@ -1,6 +1,9 @@
 #ifndef MANDELBROT_PNG_SAVER_HPP
 #define MANDELBROT_PNG_SAVER_HPP
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 #include "MandelbrotRenderer.hpp"
 
 class PngSaver {
@@ -11,7 +14,7 @@ public:
 
 private:
     int png_counter {0};
-    string pngs_dir;
+    fs::path pngs_dir;
 };
 
 #endif // MANDELBROT_PNG_SAVER_HPP

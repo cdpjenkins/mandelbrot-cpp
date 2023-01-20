@@ -36,13 +36,10 @@ void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
 
     ostringstream png_name_stream;
     // TODO - could let filesystem library do this for us...
-    png_name_stream << pngs_dir << "/mandie_" << png_counter++ << ".png";
+    const string &png_file_name = "mandie_"s + to_string(png_counter++) + ".png";
+    fs::path file_path = pngs_dir / png_file_name;
 
-    auto png_name = png_name_stream.str();
-
-    cout << "Saving " << png_name << endl;
-
-    int rc = IMG_SavePNG(surface, png_name.c_str());
+    int rc = IMG_SavePNG(surface, file_path.string().c_str());
     if (rc != 0) {
         throw runtime_error("Failed to save PNG: "s + SDL_GetError());
     }
