@@ -1,11 +1,24 @@
 #include <iostream>
 using namespace std;
+#include <filesystem>
+namespace fs = std::filesystem;
+
 
 #include <SDL.h>
 #include <SDL_image.h>
 
 #include "PngSaver.hpp"
 #include "MandelbrotRenderer.hpp"
+
+PngSaver::PngSaver(string & pngs_dir) :
+    pngs_dir(pngs_dir)
+{
+    fs::path base_path(pngs_dir);
+
+    if (!fs::exists(pngs_dir)) {
+        fs::create_directory(pngs_dir);
+    }
+} 
 
 void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
     SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom(
@@ -21,10 +34,15 @@ void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
         throw runtime_error("Failed creating new surface: "s + SDL_GetError());
     }
 
-    ostringstream png_name;
-    png_name << png_base << png_counter++ << ".png";
+    ostringstream png_name_stream;
+    // TODO - could let filesystem library do this for us...
+    png_name_stream << pngs_dir << "/mandie_" << png_counter++ << ".png";
 
-    int rc = IMG_SavePNG(surface, png_name.str().c_str());
+    auto png_name = png_name_stream.str();
+
+    cout << "Saving " << png_name << endl;
+
+    int rc = IMG_SavePNG(surface, png_name.c_str());
     if (rc != 0) {
         throw runtime_error("Failed to save PNG: "s + SDL_GetError());
     }

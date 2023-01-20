@@ -1,9 +1,13 @@
 #include "SDLApp.hpp"
 
 #include <memory>
+#include <filesystem>
+#include <iostream>
+
+namespace fs = std::filesystem;
 
 int main(int argc, char** argv) {
-    Config config = Config::parse(argc, argv);
+    Config config = Config::parse(argc, argv);    
 
     SDLApp app(config);
     app.main_loop();
@@ -21,7 +25,7 @@ SDLApp::SDLApp(Config &config) :
                 config,
                 config.initial_coords,
                 config.initial_zoom)),
-        png_saver(PngSaver(config.png_base))
+        png_saver(PngSaver(config.pngs_dir))
 {
     // constructor body left intentionally blank
 }

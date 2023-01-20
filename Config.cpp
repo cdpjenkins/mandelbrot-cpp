@@ -15,8 +15,8 @@ Config Config::parse(int argc, char** argv) {
             config.zoom_factor = stod(argv[++i]);
         } else if (arg_key == "--max-zoom") {
             config.max_zoom = stod(argv[++i]);
-        } else if (arg_key == "--png-base") {
-            config.png_base = argv[++i];
+        } else if (arg_key == "--pngs-dir") {
+            config.pngs_dir = argv[++i];
         } else if (arg_key == "--auto-zoom-to") {
             config.auto_zoom = true;
             const auto *arg = argv[++i];

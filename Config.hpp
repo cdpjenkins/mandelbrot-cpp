@@ -11,7 +11,7 @@ public:
     int iteration_depth = 800;
     double zoom_factor = 0.7;
     double max_zoom = 0.000000000000000000001;
-    string png_base = "pngs/mandie_"s;
+    string pngs_dir = "pngs"s;
     bool auto_zoom = false;
     Complex zoom_to = Complex(0, 0);
     Complex initial_coords = Complex(0, 0);
