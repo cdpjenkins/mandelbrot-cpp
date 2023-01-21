@@ -34,8 +34,7 @@ void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
         throw runtime_error("Failed creating new surface: "s + SDL_GetError());
     }
 
-    ostringstream png_name_stream;
-    // TODO - could let filesystem library do this for us...
+    // Sadly we can't use std::format() because clang appears not to support it yet
     const string &png_file_name = "mandie_"s + to_string(png_counter++) + ".png";
     fs::path file_path = pngs_dir / png_file_name;
 
