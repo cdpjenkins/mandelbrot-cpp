@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "Config.hpp"
-#include "Complex.hpp"
 
 Config Config::parse(int argc, char** argv) {
     Config config;
