@@ -8,7 +8,7 @@
 class RenderedMandelbrot {
 
 public:
-    RenderedMandelbrot(int width, int height);
+    RenderedMandelbrot(const int width, const int height);
 
     void set_pixel(int x, int y, Colour && colour) {
         buffer[y * width + x] = colour;

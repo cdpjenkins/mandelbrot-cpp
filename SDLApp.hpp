@@ -10,7 +10,7 @@ using namespace std;
 
 class SDLApp {
 public:
-    explicit SDLApp(Config & config);
+    explicit SDLApp(const Config& config);
 
     void main_loop();
 

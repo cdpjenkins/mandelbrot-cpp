@@ -10,7 +10,7 @@ namespace fs = std::filesystem;
 #include "PngSaver.hpp"
 #include "MandelbrotRenderer.hpp"
 
-PngSaver::PngSaver(string & pngs_dir) :
+PngSaver::PngSaver(const string& pngs_dir) :
     pngs_dir(pngs_dir)
 {
     fs::path base_path(pngs_dir);

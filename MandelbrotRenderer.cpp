@@ -11,7 +11,10 @@ using namespace std;
 
 const int colour_cycle_period = 256;
 
-MandelbrotRenderer::MandelbrotRenderer(int screen_width, int screen_height, Config &config, Complex centre,
+MandelbrotRenderer::MandelbrotRenderer(int screen_width,
+                                       int screen_height,
+                                       const Config &config,
+                                       Complex centre,
                                        double zoom_size) :
         screen_width(screen_width),
         screen_height(screen_height),
@@ -71,7 +74,7 @@ Colour iterations_to_rgb_using_trig(int iterations) {
     return Colour{r, g, b, 0xFF};
 }
 
-void MandelbrotRenderer::render_to_buffer(Mandelbrot & mandelbrot) {
+void MandelbrotRenderer::render_to_buffer(Mandelbrot& mandelbrot) {
     Uint32 start_time = SDL_GetTicks();
 
     vector<future<void>> render_threads;

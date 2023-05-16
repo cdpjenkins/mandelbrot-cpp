@@ -14,12 +14,12 @@ public:
     MandelbrotRenderer(
         int screen_width,
         int screen_height,
-        Config & config,
+        const Config& config,
         Complex centre = Complex(0, 0),
         double zoom_size = 4.0
     );
 
-    void render_to_buffer(Mandelbrot & render_future);
+    void render_to_buffer(Mandelbrot& render_future);
     void zoom_in_to(int x, int y);
     void zoom_in_to(Complex & coords);
     void zoom_out_to(int x, int y);

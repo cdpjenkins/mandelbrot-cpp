@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
     app.main_loop();
 }
 
-SDLApp::SDLApp(Config &config) :
+SDLApp::SDLApp(const Config& config) :
         width(config.initial_width),
         height(config.initial_height),
         config(config),

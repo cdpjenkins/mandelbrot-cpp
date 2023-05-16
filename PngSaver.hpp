@@ -8,7 +8,7 @@ namespace fs = std::filesystem;
 
 class PngSaver {
 public:
-    explicit PngSaver(string & pngs_dir);
+    explicit PngSaver(const string& pngs_dir);
 
     void save_png(RenderedMandelbrot &rendered_mandelbrot);
 

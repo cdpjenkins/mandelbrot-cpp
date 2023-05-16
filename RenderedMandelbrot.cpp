@@ -1,6 +1,6 @@
 #include "RenderedMandelbrot.hpp"
 
-RenderedMandelbrot::RenderedMandelbrot(int width, int height) :
+RenderedMandelbrot::RenderedMandelbrot(const int width, const int height) :
         width(width),
         height(height)
 {
