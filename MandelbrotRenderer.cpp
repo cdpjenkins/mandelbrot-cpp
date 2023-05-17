@@ -14,7 +14,7 @@ const int colour_cycle_period = 256;
 MandelbrotRenderer::MandelbrotRenderer(int screen_width,
                                        int screen_height,
                                        const Config &config,
-                                       Complex centre,
+                                       const Complex& centre,
                                        double zoom_size) :
         screen_width(screen_width),
         screen_height(screen_height),
@@ -74,7 +74,7 @@ Colour iterations_to_rgb_using_trig(int iterations) {
     return Colour{r, g, b, 0xFF};
 }
 
-void MandelbrotRenderer::render_to_buffer(Mandelbrot& mandelbrot) {
+void MandelbrotRenderer::render_to_buffer(const Mandelbrot& mandelbrot) {
     Uint32 start_time = SDL_GetTicks();
 
     vector<future<void>> render_threads;
@@ -135,7 +135,7 @@ void MandelbrotRenderer::zoom_in_to(const int x, const int y) {
     zoom_in_to(centre);
 }
 
-void MandelbrotRenderer::zoom_in_to(Complex &coords) {
+void MandelbrotRenderer::zoom_in_to(const Complex& coords) {
     zoom_size *= config.zoom_factor;
     this->centre = coords;
     cout << setprecision(30) << coords.re << " + " << coords.im << "i" << " " << zoom_size << endl;
