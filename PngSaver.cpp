@@ -21,7 +21,8 @@ PngSaver::PngSaver(const string& pngs_dir) :
 } 
 
 void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
-    SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom(
+    // TODO consider RAII to create/free the surface
+    SDL_Surface* png_surface = SDL_CreateRGBSurfaceWithFormatFrom(
         (void*) rendered_mandelbrot.get_buffer(),
         rendered_mandelbrot.width,
         rendered_mandelbrot.height,
@@ -30,7 +31,7 @@ void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
         SDL_PIXELFORMAT_RGBA32
     );
 
-    if (!surface) {
+    if (!png_surface) {
         throw runtime_error("Failed creating new surface: "s + SDL_GetError());
     }
 
@@ -38,8 +39,10 @@ void PngSaver::save_png(RenderedMandelbrot &rendered_mandelbrot) {
     const string &png_file_name = "mandie_"s + to_string(png_counter++) + ".png";
     fs::path file_path = pngs_dir / png_file_name;
 
-    int rc = IMG_SavePNG(surface, file_path.string().c_str());
+    int rc = IMG_SavePNG(png_surface, file_path.string().c_str());
     if (rc != 0) {
         throw runtime_error("Failed to save PNG: "s + SDL_GetError());
     }
+
+    SDL_FreeSurface(png_surface);
 }
