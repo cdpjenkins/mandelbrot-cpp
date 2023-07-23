@@ -107,7 +107,7 @@ void MandelbrotRenderer::render_to_buffer(const Mandelbrot& mandelbrot) {
 
 int MandelbrotRenderer::get_num_threads(int max_threads) {
     const int processor_count = int(thread::hardware_concurrency());
-    const auto num_threads = min(max_threads, processor_count);
+    const auto num_threads = max(min(max_threads, processor_count), 1);
 
     cout << "Using " << num_threads << " rendering threads" << endl;
 
