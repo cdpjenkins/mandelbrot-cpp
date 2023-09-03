@@ -47,4 +47,7 @@ private:
     static int get_num_threads(int max_threads = 10);
 };
 
+Colour iterations_to_rgb(int iterations);
+Colour iterations_to_rgb_using_trig(int iterations);
+
 #endif // MANDELBROT_MANDELBROTRENDERER_HPP

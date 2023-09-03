@@ -25,7 +25,6 @@ MandelbrotRenderer::MandelbrotRenderer(int screen_width,
         num_threads(get_num_threads(config.max_threads))
 {}
 
-
 Colour iterations_to_rgb(int iterations) {
     // This is kind of like doing HSV to RGB conversation, except:
     // thankfully we don't have to do *full* HSV->RGB conversation because

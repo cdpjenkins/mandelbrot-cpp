@@ -24,4 +24,14 @@ add_executable(mandelbrot
         src/RenderedMandelbrot.cpp
         src/SDLContext.cpp)
 
+add_executable(mandelbrot_unit_test
+        src/Mandelbrot.cpp
+        src/MandelbrotRenderer.cpp
+        src/RenderedMandelbrot.cpp
+        test/MandelbrotTest.cpp
+        test/MandelbrotRendererTest.cpp)
+
 target_link_libraries(mandelbrot ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+
+# TODO - ew, this isn't nice. Need to decouple the stuff that we unit-test from the the SDL stuff
+target_link_libraries(mandelbrot_unit_test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
