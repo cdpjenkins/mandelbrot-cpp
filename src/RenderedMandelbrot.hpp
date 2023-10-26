@@ -1,7 +1,8 @@
 #ifndef MANDELBROT_RENDEREDMANDELBROT_HPP
 #define MANDELBROT_RENDEREDMANDELBROT_HPP
 
-#include <vector>
+#include <memory>
+#include <iostream>
 
 #include "Colour.hpp"
 
@@ -15,14 +16,14 @@ public:
     }
 
     Colour * get_buffer() {
-        return buffer.data();
+        return buffer.get();
     }
 
     int width;
     int height;
 
 private:
-    std::vector<Colour> buffer;
+    std::unique_ptr<Colour[]> buffer;
 };
 
 #endif //MANDELBROT_RENDEREDMANDELBROT_HPP
