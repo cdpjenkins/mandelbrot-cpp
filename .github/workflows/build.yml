@@ -15,6 +15,7 @@ jobs:
         fetch-depth: 0
     - name: Install packages
       run: |
+        sudo apt update
         sudo apt install cmake libsdl2-dev libsdl2-image-dev
     - name: Build binary
       run: |
