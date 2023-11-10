@@ -66,11 +66,15 @@ Colour iterations_to_rgb_using_trig(int iterations) {
 
     double theta = 2 * M_PI * iterations / colour_cycle_period;
 
-    uint8_t r = uint8_t(sin(theta) * 128 + 127);
-    uint8_t g = uint8_t(sin(theta - M_PI_4) * 128 + 127);
-    uint8_t b = uint8_t(sin(theta - M_PI_2) * 128 + 127);
+    uint8_t r = uint8_t(sin(theta) * 127 + 127);
+    uint8_t g = uint8_t(sin(theta - M_PI_4) * 127 + 127);
+    uint8_t b = uint8_t(sin(theta - M_PI_2) * 127 + 127);
 
     return Colour{r, g, b, 0xFF};
+}
+
+uint8_t ston(double stour) {
+    return stour * 127 + 127;
 }
 
 void MandelbrotRenderer::render_to_buffer(const Mandelbrot& mandelbrot) {

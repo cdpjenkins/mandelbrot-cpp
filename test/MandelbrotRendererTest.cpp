@@ -19,7 +19,15 @@ TEST_CASE("Colour of n==0 pixel is red-ish when using weird trig to map iteratio
     const Colour colour = iterations_to_rgb_using_trig(0);
 
     CHECK(colour.r == 0x7F);
-    CHECK(colour.g == 0x24);
+    CHECK(colour.g == 0x25);
     CHECK(colour.b == 0x00);
     CHECK(colour.a == 0xFF);
+}
+
+TEST_CASE("All the freaking colours") {
+    for (int i = 0; i < 1000; i++) {
+        const Colour colour = iterations_to_rgb_using_trig(i);
+
+        cout << i << "," << static_cast<int>(colour.r) << "," << static_cast<int>(colour.g) << "," << static_cast<int>(colour.b) << endl;
+    }
 }
