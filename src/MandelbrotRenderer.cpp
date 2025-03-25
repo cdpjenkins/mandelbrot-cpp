@@ -3,6 +3,7 @@
 #include <vector>
 #include <future>
 #include <cmath>
+#include <algorithm>
 using namespace std;
 
 #include <SDL.h>
@@ -113,7 +114,7 @@ void MandelbrotRenderer::render_to_buffer(const Mandelbrot& mandelbrot) {
 
     std::for_each(render_threads.begin(),
                   render_threads.end(),
-                  [](auto & render_future){ render_future.wait(); });
+                  [](const std::future<void>& render_future){ render_future.wait(); });
 
     cout << "rendering took " << SDL_GetTicks() - start_time << "ms" << endl;
 }
