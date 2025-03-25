@@ -10,6 +10,7 @@ using namespace std;
 #include "MandelbrotRenderer.hpp"
 
 const int colour_cycle_period = 256;
+const int VECTOR_SIZE = 4;  // Process 4 pixels at once
 
 MandelbrotRenderer::MandelbrotRenderer(int screen_width,
                                        int screen_height,
@@ -85,15 +86,24 @@ void MandelbrotRenderer::render_to_buffer(const Mandelbrot& mandelbrot) {
     int slice_size = screen_height / num_threads;
 
     for (auto y_slice = 0; y_slice < screen_height; y_slice += slice_size) {
-        auto render_lambda = [y_slice , this, &mandelbrot, slice_size] {
+        auto render_lambda = [y_slice, this, &mandelbrot, slice_size] {
             for (auto y = y_slice; y < y_slice + slice_size && y < screen_height; y++) {
-                for (auto x = 0; x < screen_width; x++) {
-                    // this is probably very inefficient with all the divides and multiplies
-                    Complex k = screen_to_complex(x, y);
-
-                    int n = mandelbrot.compute(k);
-
-                    rendered_mandelbrot.set_pixel(x, y, iterations_to_rgb_using_trig(n));
+                // Process pixels in chunks of VECTOR_SIZE
+                for (auto x = 0; x < screen_width; x += VECTOR_SIZE) {
+                    int pixels_to_process = min(VECTOR_SIZE, screen_width - x);
+                    
+                    // Pre-calculate complex coordinates for all pixels in the chunk
+                    vector<Complex> coords;
+                    coords.reserve(pixels_to_process);
+                    for (int i = 0; i < pixels_to_process; i++) {
+                        coords.push_back(screen_to_complex(x + i, y));
+                    }
+                    
+                    // Process all pixels in the chunk
+                    for (int i = 0; i < pixels_to_process; i++) {
+                        int n = mandelbrot.compute(coords[i]);
+                        rendered_mandelbrot.set_pixel(x + i, y, iterations_to_rgb_using_trig(n));
+                    }
                 }
             }
         };
@@ -105,7 +115,7 @@ void MandelbrotRenderer::render_to_buffer(const Mandelbrot& mandelbrot) {
                   render_threads.end(),
                   [](auto & render_future){ render_future.wait(); });
 
-    cout << "rendering took " << SDL_GetTicks() - start_time << "ms" <<endl;
+    cout << "rendering took " << SDL_GetTicks() - start_time << "ms" << endl;
 }
 
 int MandelbrotRenderer::get_num_threads(int max_threads) {

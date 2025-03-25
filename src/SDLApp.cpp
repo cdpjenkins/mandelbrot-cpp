@@ -8,6 +8,7 @@ namespace fs = std::filesystem;
 
 int main(int argc, char** argv) {
     Config config = Config::parse(argc, argv);    
+    cout << "Current working directory: " << fs::current_path() << endl;
 
     SDLApp app(config);
     app.main_loop();
